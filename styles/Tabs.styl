@@ -1,0 +1,28 @@
+Plastique-Tabs($tabsBorderColor = #9bbdff) {
+  .Tabs{
+    position: relative;
+
+    &__menu{
+      margin-bottom 1rem
+    }
+
+    &__item{
+      &_active{
+        border-color: $tabsBorderColor $tabsBorderColor #fff !important;
+        background: linear-gradient(to bottom, #2a72ff17, white) !important
+        box-shadow: 0 0 3px 2px white inset;
+        color: #346dd5 !important
+      }
+
+      &:not(.Tabs__item_active){
+        border-bottom-color: $tabsBorderColor !important
+        &:hover{
+          border-color: #c8dbfc #c8dbfc $tabsBorderColor !important
+        }
+      }
+    }
+
+    &__section{
+    }
+  }
+}

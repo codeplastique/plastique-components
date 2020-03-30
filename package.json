@@ -1,0 +1,22 @@
+{
+  "name": "plastique-components",
+  "version": "1.0.0",
+  "description": "Plastique components kit",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "plastique": "git://github.com/codeplastique/plastique.git#543e2243003d62d55c8f8fdbe4a32af25dde0b14",
+    "typescript": "3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeplastique/plastique-components.git"
+  },
+  "author": "Bondarenko Artem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeplastique/plastique-components/issues"
+  },
+  "homepage": "https://github.com/codeplastique/plastique-components#readme"
+}
