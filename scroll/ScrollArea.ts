@@ -12,9 +12,18 @@ import BeforeDetach from "plastique/component/BeforeDetach";
 class ScrollArea {
     private ps: PerfectScrollbar;
 
+    constructor(
+        private readonly useScrollX: boolean = true,
+        private readonly useScrollY: boolean = true
+    ) {
+    }
+
     @AfterAttach
     private init(): void{
-        this.ps = new PerfectScrollbar(this.getElement(), null)
+        this.ps = new PerfectScrollbar(this.getElement(), {
+            suppressScrollX: !this.useScrollX,
+            suppressScrollY: !this.useScrollY
+        })
     }
 
     @BeforeDetach
