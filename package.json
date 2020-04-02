@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "plastique": "git://github.com/codeplastique/plastique.git#543e2243003d62d55c8f8fdbe4a32af25dde0b14",
-    "typescript": "3.2"
+    "typescript": "3.2",
+    "perfect-scrollbar": "1.5.0"
   },
   "repository": {
     "type": "git",
