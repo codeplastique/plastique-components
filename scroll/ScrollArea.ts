@@ -56,7 +56,8 @@ class ScrollArea {
     }
 
     public update(): void{
-        this.ps.update();
+        if(this.ps)
+            this.ps.update();
     }
 }
 interface ScrollArea extends Component{}
