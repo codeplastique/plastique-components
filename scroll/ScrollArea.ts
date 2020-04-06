@@ -14,15 +14,16 @@ class ScrollArea {
 
     constructor(
         private readonly useScrollX: boolean = true,
-        private readonly useScrollY: boolean = true
-    ) {
-    }
+        private readonly useScrollY: boolean = true,
+        private readonly scrollPropagation: boolean = true
+    ) {}
 
     @AfterAttach
     private init(): void{
         this.ps = new PerfectScrollbar(this.getElement(), {
             suppressScrollX: !this.useScrollX,
-            suppressScrollY: !this.useScrollY
+            suppressScrollY: !this.useScrollY,
+            wheelPropagation: this.scrollPropagation
         })
     }
 
