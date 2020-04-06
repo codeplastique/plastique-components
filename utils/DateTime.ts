@@ -15,7 +15,7 @@ export default class DateTime{
         let year = String(date.getFullYear());
         return this.get2digit(date.getDate())
             + delimiter
-            + this.get2digit(date.getMonth())
+            + this.get2digit(date.getMonth() + 1)
             + delimiter
             + (this.yearLength == 2? year.substr(2): year)
     }
