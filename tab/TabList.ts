@@ -6,7 +6,7 @@ import ReactiveMap from "plastique/collection/ReactiveMap";
 let entry: {key: String, value: String};
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Tabs">
     <div class="Tabs__menu nav nav-tabs nav-fill">
-        <li class="nav-item" v:each="entry: ${this.slotNameToName}">
+        <li class="nav-item Tabs__item-wrap" v:each="entry: ${this.slotNameToName}">
             <button class="nav-link Tabs__item" 
                 v:text="${entry.value}" 
                 v:onclick="${this.selectTab(entry.key)}"
