@@ -1,0 +1,16 @@
+.Switcher {
+  $name = '.Switcher'
+  &_inline{
+    {$name}__radio{
+      display: inline-flex;
+      margin-right: 1rem;
+      margin-top 0 !important
+    }
+  }
+
+  &__radio{
+    + {$name}__radio{
+      margin-top .5rem
+    }
+  }
+}

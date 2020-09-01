@@ -1,9 +1,9 @@
-export default class DateTime{
+export default class DateTimeFormatter{
     constructor(
-        private dateDelimiter: string = '/',
-        private timeDelimiter: string = ':',
-        private yearLength: 2 | 4 = 2,
-        private showSeconds: boolean = true
+        public dateDelimiter: string = '/',
+        public timeDelimiter: string = ':',
+        public yearLength: 2 | 4 = 2,
+        public showSeconds: boolean = true
     ) {}
 
     private get2digit(numb: number): string{
