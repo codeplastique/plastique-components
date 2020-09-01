@@ -2,7 +2,7 @@ import Reactive from "plastique/component/Reactive";
 import Component from "plastique/component/Component";
 import ValidableField from "./ValidableField";
 import Jsonable from "plastique/hash/Jsonable";
-import Disableable from "./Disableable";
+import Disableable from "../state/Disableable";
 
 @Reactive(function (this: ValidableFieldSuffix) {
 `<div class="input-group" xmlns:v="http://github.com/codeplastique/plastique">
