@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "perfect-scrollbar": "1.5.0",
-    "plastique": "git://github.com/codeplastique/plastique.git#1.5.40",
+    "plastique": "git://github.com/codeplastique/plastique.git#1.5.42",
     "typescript": "3.2"
   },
   "repository": {

@@ -1,5 +1,5 @@
 Plastique-Dropdown($height = calc(2.25rem + 2px), $borderRadius = .5rem) {
-  .Dropdown {
+.Dropdown {
     $name = '.Dropdown'
 
     min-height $height;
@@ -27,9 +27,12 @@ Plastique-Dropdown($height = calc(2.25rem + 2px), $borderRadius = .5rem) {
       }
     }
 
-    &_active_straight {
-      border-radius $borderRadius $borderRadius 0 0;
+    &_active{
       z-index 20;
+    }
+
+    &_straight {
+      border-radius $borderRadius $borderRadius 0 0;
 
       .Dropdown__menu {
         border-top-color white;
@@ -46,9 +49,8 @@ Plastique-Dropdown($height = calc(2.25rem + 2px), $borderRadius = .5rem) {
       }
     }
 
-    &_active_reverse {
+    &_reverse {
       border-radius 0 0 $borderRadius $borderRadius;
-      z-index 20;
 
       .Dropdown__search {
         z-index 1

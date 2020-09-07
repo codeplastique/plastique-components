@@ -14,7 +14,10 @@ import Disableable from "../state/Disableable";
 @Reactive(function(this: Dropdown<any>){
 let option: DropdownOption<any>, iter: TemplateIterator;
 `<div class="Dropdown" xmlns:v="http://github.com/codeplastique/plastique"
-     v:classappend="${(this.isActive ? (this.isStraight? 'Dropdown_active_straight': 'Dropdown_active_reverse') : '') + (this.isSearchable? '': ' Dropdown_clickable') + (this.disabled? ' Dropdown_disabled': '')}" >
+     v:classappend="${
+            (this.isActive ? ('Dropdown_active '+ (this.isStraight? 'Dropdown_straight': 'Dropdown_reverse')): '')
+            + (this.isSearchable? '': ' Dropdown_clickable') 
+            + (this.disabled? ' Dropdown_disabled': '')}" >
     
     <i class="fas fa-spinner fa-spin Dropdown__load-icon" v:if="${this.isLoading}"></i>
     <i class="fas fa-caret-down Dropdown__icon"
