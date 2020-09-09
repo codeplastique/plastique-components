@@ -1,0 +1,21 @@
+Plastique-Validable-suffix($height = calc(2.25rem + 2px)) {
+.Validable-suffix {
+  $name = '.Validable-suffix'
+
+  position relative
+  &__btn {
+    position: absolute;
+    bottom: 0;
+    right: .7rem;
+    line-height: $height;
+    color: rgba(0, 0, 0, 0.2);
+    cursor pointer
+
+    &_visible,
+    &:hover {
+      color: #989898;
+    }
+  }
+}
+
+}
