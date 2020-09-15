@@ -20,10 +20,12 @@ export default class LazyDropdown<V> extends Dropdown<V>{
         if(this.isLoaded)
             super.openOptions();
         else
-            this.loadOptions().then(() => super.openOptions());
+            this.loadOptions().then(() => super.openOptions()).catch(() => {});
     }
 
     public loadOptions(): Promise<void>{
+        if(this.isLoading)
+            return Promise.reject()
         this.isLoading = true
         return this.optionsProducer()
             .then(opts => {
