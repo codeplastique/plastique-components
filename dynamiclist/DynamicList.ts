@@ -17,7 +17,7 @@ abstract class DynamicList<E extends DynamicListEntry> implements Jsonable, Vali
     @InitEvent public static readonly CHANGE_ENTRY_STATE_EVENT: AppEvent<DynamicListEntry>
     protected constructor(
         protected entries: E[],
-        private entryFactory: new() => E
+        private entryFactory: () => E
     ){
         this.addEmptyEntry();
     }
@@ -49,7 +49,7 @@ abstract class DynamicList<E extends DynamicListEntry> implements Jsonable, Vali
     }
 
     protected genNewEntry(): E{
-        return new this.entryFactory()
+        return this.entryFactory()
     }
 
     public getNonEmptyEntries(): E[]{
