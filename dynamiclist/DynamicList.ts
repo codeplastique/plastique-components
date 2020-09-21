@@ -1,10 +1,10 @@
 import DynamicListEntry from "./DynamicListEntry";
-import Component from "plastique/component/Component";
-import Jsonable from "plastique/hash/Jsonable";
-import Reactive from "plastique/component/Reactive";
-import AppEvent from "plastique/event/AppEvent";
-import InitEvent from "plastique/event/InitEvent";
-import Listener from "plastique/event/Listener";
+import Component from "@plastique/core/component/Component";
+import Jsonable from "@plastique/core/hash/Jsonable";
+import Reactive from "@plastique/core/component/Reactive";
+import AppEvent from "@plastique/core/event/AppEvent";
+import InitEvent from "@plastique/core/event/InitEvent";
+import Listener from "@plastique/core/event/Listener";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 

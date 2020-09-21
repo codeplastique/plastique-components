@@ -1,4 +1,4 @@
-import Reactive from "plastique/component/Reactive";
+import Reactive from "@plastique/core/component/Reactive";
 import ValidableField from "./ValidableField";
 
 @Reactive(function (this: ValidablePassword){

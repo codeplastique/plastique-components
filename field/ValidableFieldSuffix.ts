@@ -1,7 +1,7 @@
-import Reactive from "plastique/component/Reactive";
-import Component from "plastique/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
+import Component from "@plastique/core/component/Component";
 import ValidableField from "./ValidableField";
-import Jsonable from "plastique/hash/Jsonable";
+import Jsonable from "@plastique/core/hash/Jsonable";
 import Disableable from "../state/Disableable";
 
 @Reactive(function (this: ValidableFieldSuffix) {

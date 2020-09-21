@@ -1,6 +1,6 @@
-import Reactive from "plastique/component/Reactive";
+import Reactive from "@plastique/core/component/Reactive";
 import ValidableField from "./ValidableField";
-import I18n from "plastique/utils/I18n";
+import I18n from "@plastique/core/utils/I18n";
 import NumberUtils from "../utils/NumberUtils";
 
 @Reactive

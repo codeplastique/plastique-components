@@ -12,7 +12,7 @@
     "jsx": "react-native"
   },
   "include": [
-    "node_modules/plastique/**/*"
+    "node_modules/@plastique/**/*"
   ],
   "typeAcquisition": {
     "enable": true,

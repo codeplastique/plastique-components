@@ -1,5 +1,5 @@
-import Reactive from "plastique/component/Reactive";
-import Component from "plastique/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
+import Component from "@plastique/core/component/Component";
 
 @Reactive(function (this: DropdownOption<any>){`
 <div xmlns:v="http://github.com/codeplastique/plastique" 

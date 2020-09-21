@@ -1,4 +1,4 @@
-import {TypeDef} from "plastique/base/Type";
+import {TypeDef} from "@plastique/core/base/Type";
 
 export default class Page{
     /**

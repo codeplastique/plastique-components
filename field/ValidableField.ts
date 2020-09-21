@@ -1,10 +1,10 @@
-import Component from "plastique/component/Component";
-import Reactive from "plastique/component/Reactive";
-import InitEvent from "plastique/event/InitEvent";
-import AppEvent from "plastique/event/AppEvent";
-import Jsonable from "plastique/hash/Jsonable";
-import OnChange from "plastique/component/OnChange";
-import Inject from "plastique/component/Inject";
+import Component from "@plastique/core/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
+import InitEvent from "@plastique/core/event/InitEvent";
+import AppEvent from "@plastique/core/event/AppEvent";
+import Jsonable from "@plastique/core/hash/Jsonable";
+import OnChange from "@plastique/core/component/OnChange";
+import Inject from "@plastique/core/component/Inject";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 

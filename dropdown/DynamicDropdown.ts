@@ -1,6 +1,6 @@
 import DropdownOption from "./DropdownOption";
-import Reactive from "plastique/component/Reactive";
-import Lazy from "plastique/utils/Lazy";
+import Reactive from "@plastique/core/component/Reactive";
+import Lazy from "@plastique/core/utils/Lazy";
 import Dropdown from "./Dropdown";
 
 @Reactive

@@ -1,8 +1,8 @@
-import Component from "plastique/component/Component";
-import Reactive from "plastique/component/Reactive";
+import Component from "@plastique/core/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
 import Dropdown from "./Dropdown";
-import Jsonable from "plastique/hash/Jsonable";
-import App from "plastique/base/App";
+import Jsonable from "@plastique/core/hash/Jsonable";
+import App from "@plastique/core/base/App";
 
 @Reactive(function (this: ButtonDropdown<any>){
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Button-dropdown" v:onclick="${this.open}">

@@ -1,7 +1,7 @@
-import Component from "plastique/component/Component";
+import Component from "@plastique/core/component/Component";
 import Draggable from "./Draggable";
-import Reactive from "plastique/component/Reactive";
-import BindThis from "plastique/utils/BindThis";
+import Reactive from "@plastique/core/component/Reactive";
+import BindThis from "@plastique/core/utils/BindThis";
 
 @Reactive(function (this: DragArea) {
 `<div xmlns:v="http://github.com/codeplastique/plastique"

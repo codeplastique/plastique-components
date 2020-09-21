@@ -1,5 +1,5 @@
 import ValidableNumber from "./ValidableNumber";
-import Reactive from "plastique/component/Reactive";
+import Reactive from "@plastique/core/component/Reactive";
 
 @Reactive
 export default class ValidableRangeNumber extends ValidableNumber{

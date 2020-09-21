@@ -1,4 +1,4 @@
-import Reactive from "plastique/component/Reactive";
+import Reactive from "@plastique/core/component/Reactive";
 import DropdownOption from "./DropdownOption";
 
 @Reactive

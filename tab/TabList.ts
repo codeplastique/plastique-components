@@ -1,6 +1,6 @@
-import Component from "plastique/component/Component";
-import Reactive from "plastique/component/Reactive";
-import ReactiveMap from "plastique/collection/ReactiveMap";
+import Component from "@plastique/core/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
+import ReactiveMap from "@plastique/core/collection/ReactiveMap";
 
 @Reactive(() => {
 let entry: {key: String, value: String};

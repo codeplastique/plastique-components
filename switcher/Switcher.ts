@@ -1,11 +1,11 @@
-import Reactive from "plastique/component/Reactive";
-import Component from "plastique/component/Component";
-import Jsonable from "plastique/hash/Jsonable";
-import ReactiveMap, {MapEntry} from "plastique/collection/ReactiveMap";
-import TemplateIterator from "plastique/utils/TemplateIterator";
-import InitEvent from "plastique/event/InitEvent";
-import AppEvent from "plastique/event/AppEvent";
-import OnChange from "plastique/component/OnChange";
+import Reactive from "@plastique/core/component/Reactive";
+import Component from "@plastique/core/component/Component";
+import Jsonable from "@plastique/core/hash/Jsonable";
+import ReactiveMap, {MapEntry} from "@plastique/core/collection/ReactiveMap";
+import TemplateIterator from "@plastique/core/utils/TemplateIterator";
+import InitEvent from "@plastique/core/event/InitEvent";
+import AppEvent from "@plastique/core/event/AppEvent";
+import OnChange from "@plastique/core/component/OnChange";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 

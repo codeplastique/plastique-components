@@ -1,7 +1,7 @@
 import DropdownOption from "./DropdownOption";
-import InitEvent from "plastique/event/InitEvent";
-import AppEvent from "plastique/event/AppEvent";
-import Reactive from "plastique/component/Reactive";
+import InitEvent from "@plastique/core/event/InitEvent";
+import AppEvent from "@plastique/core/event/AppEvent";
+import Reactive from "@plastique/core/component/Reactive";
 import Dropdown from "./Dropdown";
 
 @Reactive

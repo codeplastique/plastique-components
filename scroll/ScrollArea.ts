@@ -1,8 +1,8 @@
-import Component from "plastique/component/Component";
-import Reactive from "plastique/component/Reactive";
+import Component from "@plastique/core/component/Component";
+import Reactive from "@plastique/core/component/Reactive";
 import PerfectScrollbar from "perfect-scrollbar";
-import AfterAttach from "plastique/component/AfterAttach";
-import BeforeDetach from "plastique/component/BeforeDetach";
+import AfterAttach from "@plastique/core/component/AfterAttach";
+import BeforeDetach from "@plastique/core/component/BeforeDetach";
 
 @Reactive(() => {
 `<section xmlns:v="http://github.com/codeplastique/plastique" class="Scroll-area">
