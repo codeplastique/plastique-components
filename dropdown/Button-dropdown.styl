@@ -1,6 +1,7 @@
-Plastique-Button-dropdown($height = calc(2.25rem + 2px), $textColor = black) {
+Plastique-Button-dropdown($textColor = black) {
   .Button-dropdown {
     $name = '.Button-dropdown'
+    $height = 2.375rem;
     position relative
 
     &__dropdown {
@@ -9,7 +10,7 @@ Plastique-Button-dropdown($height = calc(2.25rem + 2px), $textColor = black) {
       left 0;
       display none
       text-align left
-      color $RootTextColor
+      color $textColor
 
       &_active {
         display block

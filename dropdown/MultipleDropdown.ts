@@ -37,19 +37,25 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         throw new Error('Use "getAllSelected" method');
     }
 
-    public getAllSelected(): DropdownOption<V>[]{
+    public getAllSelected(): ReadonlyArray<DropdownOption<V>>{
         return this.selectedOptions;
+    }
+
+    public getAllSelectedValues(): V[]{
+        return this.selectedOptions.map(it => it.value);
     }
 
     public setSelected(value: V): void{
         throw new Error('Use "select" method');
     }
 
-    protected selectItem (option: DropdownOption<V>): void{
-        let isRemove: boolean = false
-        if(option == null) {
+    protected selectItem (option: DropdownOption<V>, event?: MouseEvent): void{
+        let isRemove: boolean = false;
+
+        if(option == null || event.ctrlKey)
             this.removeSelected();
-        }else {
+
+        if(option != null) {
             let isRemove = this.isOptionSelected(option);
             this.searchText = '';
             if (isRemove)
@@ -58,8 +64,8 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
                 this.selectedOptions.push(option);
             this.updateMainSelected();
         }
-        let event: AppEvent<any> = isRemove? MultipleDropdown.REMOVE_OPTION_EVENT: Dropdown.SELECT_OPTION_EVENT;
-        this.fireEventOnParents(event, option);
+        let appEvent: AppEvent<any> = isRemove? MultipleDropdown.REMOVE_OPTION_EVENT: Dropdown.SELECT_OPTION_EVENT;
+        this.fireEventOnParents(appEvent, option);
     }
 
     public removeSelected(): void{
@@ -86,7 +92,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     }
 
     public toJSON(): Object | Object[] {
-        return this.selectedOptions.map(it => it.value);
+        return this.getAllSelectedValues()
     }
 
     public refreshOptions(options: DropdownOption<V>[], selectedValues?: V[]) {

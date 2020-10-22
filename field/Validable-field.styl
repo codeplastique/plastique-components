@@ -1,6 +1,8 @@
-Plastique-Validable-field($height = calc(2.25rem + 2px), $inputBorderRadius = .5rem) {
+Plastique-Validable-field() {
   .Validable-field {
     $name = '.Validable-field';
+    $height = 2.375rem;
+    $inputBorderRadius = .5rem
     position: relative;
 
     &:hover {
@@ -57,7 +59,7 @@ Plastique-Validable-field($height = calc(2.25rem + 2px), $inputBorderRadius = .5
     }
 
     &__input {
-      padding-right: 1.75rem;
+      padding-right: 1.25rem;
 
       &:focus {
         ~ {$name}__message {

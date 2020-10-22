@@ -201,14 +201,15 @@ class Dropdown<V> implements Jsonable, Validable, Disableable{
         if(nextIndexScrollTop >= this.menuElement.scrollTop + this.menuElement.clientHeight)
             this.menuElement.scrollTop += this.optionHeight;
     }
-    protected selectCurrentItem(): void{
-        this.selectItem(this.filteredOptions[this.pointer]);
+    protected selectCurrentItem(event: MouseEvent, isSilent?: boolean): void{
+        this.selectItem(this.filteredOptions[this.pointer], event, isSilent);
     }
 
-    protected selectItem (option: DropdownOption<V>): void{
+    protected selectItem (option: DropdownOption<V>, event?: MouseEvent, isSilent?: boolean): void{
         if(this.selectedOption != option) {
             this.selectedOption = option;
-            this.fireEventOnParents(Dropdown.SELECT_OPTION_EVENT, option);
+            if(!isSilent)
+                this.fireEventOnParents(Dropdown.SELECT_OPTION_EVENT, option);
             this.searchText = '';
         }
         this.closeOptions();
@@ -279,6 +280,10 @@ class Dropdown<V> implements Jsonable, Validable, Disableable{
         this.options = options;
         if(this.selectedOption)
             this.setSelected(this.selectedOption.value)
+    }
+
+    public addOption(newOption: DropdownOption<V>): void{
+        this.options.push(newOption)
     }
 
 }
