@@ -3,7 +3,7 @@ import ValidableField from "./ValidableField";
 
 @Reactive(function (this: ValidablePassword){
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Validable-suffix">
-    <v:parent/>
+    <v:parent v:classappend="'Validable-field_with-btn'"/>
     <i 
         class="fas Validable-suffix__btn" 
         v:classappend="${this.inputType == 'text'? 'fa-eye-slash Validable-suffix__btn_visible': 'fa-eye'}" 

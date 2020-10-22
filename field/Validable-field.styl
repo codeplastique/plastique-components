@@ -20,6 +20,12 @@ Plastique-Validable-field() {
       }
     }
 
+    &_with-btn{
+      {$name}__input{
+        padding-right: 1.75rem;
+      }
+    }
+
     &_invalid {
       {$name}__icon {
         color: #ce394b !important
@@ -59,8 +65,6 @@ Plastique-Validable-field() {
     }
 
     &__input {
-      padding-right: 1.25rem;
-
       &:focus {
         ~ {$name}__message {
           right -.15rem
