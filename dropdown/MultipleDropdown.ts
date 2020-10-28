@@ -49,7 +49,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         throw new Error('Use "select" method');
     }
 
-    protected selectItem (option: DropdownOption<V>, event?: MouseEvent): void{
+    protected selectItem (option: DropdownOption<V>, event?: MouseEvent, isSilent?: boolean): void{
         let isRemove: boolean = false;
 
         if(option == null || event.ctrlKey)
@@ -64,8 +64,10 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
                 this.selectedOptions.push(option);
             this.updateMainSelected();
         }
-        let appEvent: AppEvent<any> = isRemove? MultipleDropdown.REMOVE_OPTION_EVENT: Dropdown.SELECT_OPTION_EVENT;
-        this.fireEventOnParents(appEvent, option);
+        if(!isSilent) {
+            let appEvent: AppEvent<any> = isRemove ? MultipleDropdown.REMOVE_OPTION_EVENT : Dropdown.SELECT_OPTION_EVENT;
+            this.fireEventOnParents(appEvent, option);
+        }
     }
 
     public removeSelected(): void{

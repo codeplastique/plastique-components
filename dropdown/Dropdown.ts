@@ -13,6 +13,8 @@ import Disableable from "../state/Disableable";
 
 @Reactive(function(this: Dropdown<any>){
 let option: DropdownOption<any>, iter: TemplateIterator;
+let $event: MouseEvent;
+
 `<div class="Dropdown" xmlns:v="http://github.com/codeplastique/plastique"
      v:classappend="${
             (this.isActive ? ('Dropdown_active '+ (this.isStraight? 'Dropdown_straight': 'Dropdown_reverse')): '')
@@ -60,7 +62,7 @@ let option: DropdownOption<any>, iter: TemplateIterator;
         <v:block v:each="option, iter: ${this.filteredOptions}">
             <div class="Dropdown__item"
                  v:classappend="${iter.index == this.pointer ? 'Dropdown__item_flowable' : ''} + ${this.isOptionSelected(option)? ' Dropdown__item_selected': ''}"
-                 v:onclick.stop="${this.selectItem(option)}">
+                 v:onclick.stop="${this.selectItem(option, $event)}">
                  
                  <option v:component="${option}"></option>
             </div>
