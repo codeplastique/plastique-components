@@ -8,14 +8,9 @@
       "esnext"
     ],
     "removeComments": true,
-    "noEmitHelpers": true,
-    "jsx": "react-native"
+    "noEmitHelpers": true
   },
   "include": [
     "node_modules/@plastique/**/*"
-  ],
-  "typeAcquisition": {
-    "enable": true,
-    "include": ["plastique"]
-  }
+  ]
 }

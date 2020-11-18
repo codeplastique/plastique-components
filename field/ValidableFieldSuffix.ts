@@ -3,6 +3,7 @@ import Component from "@plastique/core/component/Component";
 import ValidableField from "./ValidableField";
 import Jsonable from "@plastique/core/hash/Jsonable";
 import Disableable from "../state/Disableable";
+import Validable from "../state/Validable";
 
 @Reactive(function (this: ValidableFieldSuffix) {
 `<div class="input-group" xmlns:v="http://github.com/codeplastique/plastique">
@@ -12,22 +13,26 @@ import Disableable from "../state/Disableable";
     </div>
 </div>
 `})
-class ValidableFieldSuffix implements Jsonable, Disableable{
+class ValidableFieldSuffix implements Jsonable, Disableable, Validable{
     constructor(
-        private field: ValidableField,
-        private suffix: string
+        public field: ValidableField,
+        public suffix: string
     ) {}
 
     public toJSON(): Object | Object[] {
         return this.field.toJSON();
     }
 
-    isDisabled(): boolean {
+    public isDisabled(): boolean {
         return this.field.isDisabled();
     }
 
-    setDisabled(isDisabled: boolean): void {
+    public setDisabled(isDisabled: boolean): void {
         this.field.setDisabled(isDisabled);
+    }
+
+    public isValid(): boolean {
+        return this.field.isValid();
     }
 }
 

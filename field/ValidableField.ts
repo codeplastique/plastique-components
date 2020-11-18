@@ -69,8 +69,7 @@ class ValidableField implements Jsonable, Validable, Disableable{
     }
 
     public verify(): void{
-        let isValid = !this.isRequired || !this.isEmpty();
-        this.isValueValid = isValid && this.validate(this.getValue());
+        this.isValueValid = (!this.isRequired && this.isEmpty()) || this.validate(this.getValue());
         if(this.isValueValid)
             this.errorMessage = null;
         if(!this.isSilent && this.isComponentAttached())

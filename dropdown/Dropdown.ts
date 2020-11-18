@@ -162,7 +162,6 @@ class Dropdown<V> implements Jsonable, Validable, Disableable{
                     return this.closeOptions();
 
                 let newOption = text.length != 0 ? new DropdownOption<V>(null, text) : null;
-
                 if((selected == null && newOption == null)
                     ||
                     (selected != null && selected.value == null && selected.text == text)
