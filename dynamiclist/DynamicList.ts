@@ -7,9 +7,15 @@ import InitEvent from "@plastique/core/event/InitEvent";
 import Listener from "@plastique/core/event/Listener";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
+import Emptyable from "../state/Emptyable";
 
-@Reactive
-abstract class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Disableable{
+@Reactive(function (this: DynamicList<DynamicListEntry>){
+let entry: DynamicListEntry;
+`<div xmlns:v="http://github.com/codeplastique/plastique">
+    <entry v:each="entry: ${this.entries}" v:component="${entry}"></entry>
+</div>
+`})
+class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Disableable, Emptyable{
     protected disabled: boolean;
     /**
      * event signals that the entry is empty or the filling up is started
@@ -77,6 +83,9 @@ abstract class DynamicList<E extends DynamicListEntry> implements Jsonable, Vali
         return this.entries;
     }
 
+    public isEmpty(): boolean{
+        return this.entries.some(e => !e.isEmpty());
+    }
 }
 
 export default DynamicList;

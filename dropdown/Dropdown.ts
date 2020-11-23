@@ -10,6 +10,8 @@ import Jsonable from "@plastique/core/hash/Jsonable";
 import FakeDropdownOption from "./FakeDropdownOption";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
+import Focusable from "../state/Focusable";
+import Emptyable from "../state/Emptyable";
 
 @Reactive(function(this: Dropdown<any>){
 let option: DropdownOption<any>, iter: TemplateIterator;
@@ -70,7 +72,7 @@ let $event: MouseEvent;
     </div>
 </div>    
 `})
-class Dropdown<V> implements Jsonable, Validable, Disableable{
+class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptyable{
     @InitEvent public static readonly SELECT_OPTION_EVENT: AppEvent<DropdownOption<any>>;
 
     private static readonly ELEMENTS_IN_MENU = 7;
@@ -130,7 +132,7 @@ class Dropdown<V> implements Jsonable, Validable, Disableable{
         this.pointer = this.filteredOptions.length > 0? 0: -1;
     }
 
-    public setFocus(): void{
+    public focus(): void{
         this.inputElement.focus();
     }
 
@@ -252,6 +254,10 @@ class Dropdown<V> implements Jsonable, Validable, Disableable{
 
     public isSelected(): boolean{
         return this.hasAnySelected() && !this.isFakeSelected()
+    }
+
+    public isEmpty(): boolean {
+        return !this.isSelected();
     }
 
     protected hasAnySelected(): boolean{

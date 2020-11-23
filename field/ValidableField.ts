@@ -7,6 +7,8 @@ import OnChange from "@plastique/core/component/OnChange";
 import Inject from "@plastique/core/component/Inject";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
+import Emptyable from "../state/Emptyable";
+import Focusable from "../state/Focusable";
 
 @Reactive(function(this: ValidableField){
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
@@ -23,7 +25,7 @@ import Disableable from "../state/Disableable";
     <div v:if="${!this.isValueValid && this.errorMessage}" v:text="${this.errorMessage}" class="Validable-field__message"></div>
  </div>
 `})
-class ValidableField implements Jsonable, Validable, Disableable{
+class ValidableField implements Jsonable, Validable, Disableable, Emptyable, Focusable{
     @InitEvent public static readonly CHANGE_EVENT: AppEvent<ValidableField>
 
     @OnChange(ValidableField.prototype.verify) protected value: string;
