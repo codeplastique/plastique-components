@@ -21,7 +21,7 @@ class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Di
      * event signals that the entry is empty or the filling up is started
      */
     @InitEvent public static readonly CHANGE_ENTRY_STATE_EVENT: AppEvent<DynamicListEntry>
-    protected constructor(
+    constructor(
         protected entries: E[],
         private entryFactory: () => E
     ){

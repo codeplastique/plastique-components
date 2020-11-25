@@ -22,7 +22,7 @@ class ButtonDropdown<D extends Dropdown<any>> implements Jsonable{
         if(this.openAction)
             this.openAction();
         this.dropdown.isActive = true;
-        App.nextTick(() => this.dropdown.setFocus());
+        App.nextTick(() => this.dropdown.focus());
     }
 
     toJSON(): Object | Object[] {
