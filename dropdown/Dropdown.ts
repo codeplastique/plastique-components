@@ -182,6 +182,7 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
         this.searchText = '';
         this.isFiltered = false;
         this.isActive = false;
+        this.filteredOptions = null;
     }
 
     protected prevItem(): void {

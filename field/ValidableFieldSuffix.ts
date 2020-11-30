@@ -6,7 +6,7 @@ import Disableable from "../state/Disableable";
 import Validable from "../state/Validable";
 
 @Reactive(function (this: ValidableFieldSuffix) {
-`<div class="input-group" xmlns:v="http://github.com/codeplastique/plastique">
+`<div class="input-group flex-nowrap" xmlns:v="http://github.com/codeplastique/plastique">
     <field v:component="${this.field}" v:classappend="'Validable-field_with-prefix'"></field>
     <div class="input-group-append">
         <span class="input-group-text" v:text="${this.suffix}" v:classappend="${this.isDisabled()? 'disabled': ''}"></span>

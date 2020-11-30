@@ -11,5 +11,4 @@ export default class ValidableIp extends ValidableField{
         let pattern = /^(?:\d{1,3}\.){3}\d{1,3}$/;
         return pattern.test(value);
     }
-
 }

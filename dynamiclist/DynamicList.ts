@@ -84,7 +84,7 @@ class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Di
     }
 
     public isEmpty(): boolean{
-        return this.entries.some(e => !e.isEmpty());
+        return this.entries.length == 1;
     }
 }
 

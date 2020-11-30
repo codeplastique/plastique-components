@@ -11,6 +11,9 @@ import ValidableField from "./ValidableField";
 </div>
 `})
 export default class ValidablePassword extends ValidableField{
+    constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean) {
+        super(value, placeholder, isRequired)
+    }
     public togglePasswordVisible(): void{
         this.setInputType(this.inputType == 'text'? 'password': 'text')
     }

@@ -4,8 +4,8 @@ import Reactive from "@plastique/core/component/Reactive";
 @Reactive
 export default class ValidableRangeNumber extends ValidableNumber{
     private readonly range: [number, number];
-    constructor(value: string | number, range: [number, number], placeholder?: string | number) {
-        super(value, placeholder);
+    constructor(range: [number, number], value: string | number, placeholder?: string | number, isRequired?: boolean) {
+        super(value, placeholder, isRequired);
         this.range = range;
     }
 

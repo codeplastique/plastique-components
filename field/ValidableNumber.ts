@@ -7,7 +7,7 @@ import NumberUtils from "../utils/NumberUtils";
 export default class ValidableNumber extends ValidableField {
     constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean) {
         super(
-            value === void 0? '': String(value),
+            value,
             placeholder,
             isRequired
         );

@@ -38,9 +38,9 @@ class ValidableField implements Jsonable, Validable, Disableable, Emptyable, Foc
     public inputType: 'text' | 'password' = 'text';
     @Inject private inputElem: HTMLInputElement
 
-    constructor(value: string = '', placeholder: string | number = '', isRequired?: boolean) {
-        this.value = value;
-        this.placeholder = String(placeholder);
+    constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean) {
+        this.value = value == null? '': value.toString();
+        this.placeholder = placeholder == null? '': placeholder.toString();
         this.isRequired = isRequired;
         this.isValueValid = true;
     }
