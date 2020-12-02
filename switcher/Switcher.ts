@@ -1,10 +1,11 @@
 import Reactive from "@plastique/core/component/Reactive";
 import Component from "@plastique/core/component/Component";
 import Jsonable from "@plastique/core/hash/Jsonable";
-import ReactiveMap, {MapEntry} from "@plastique/core/collection/ReactiveMap";
 import TemplateIterator from "@plastique/core/utils/TemplateIterator";
 import InitEvent from "@plastique/core/event/InitEvent";
 import AppEvent from "@plastique/core/event/AppEvent";
+import MapEntry from "@plastique/core/collection/map/MapEntry";
+import ReactiveReadonlyMap from "@plastique/core/collection/map/ReactiveReadonlyMap";
 import OnChange from "@plastique/core/component/OnChange";
 import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
@@ -33,7 +34,7 @@ class Switcher implements Jsonable, Validable, Disableable{
     public isRequired: boolean
     protected disabled: boolean
 
-    constructor(private nameToValue: ReactiveMap<string, any>,
+    constructor(private nameToValue: ReactiveReadonlyMap<string, any>,
                 value?: any
     ) {
         this.value = value;

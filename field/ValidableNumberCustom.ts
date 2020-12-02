@@ -7,8 +7,8 @@ export default class ValidableNumberCustom extends ValidableNumber{
     
     constructor(
         private validator: (numb: number) => boolean,
-        value: number | string,
-        placeholder: string | number,
+        value?: number | string,
+        placeholder?: string | number,
         errorMessage?: string,
         isRequired?: boolean
     ) {

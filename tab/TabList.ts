@@ -1,6 +1,7 @@
 import Component from "@plastique/core/component/Component";
 import Reactive from "@plastique/core/component/Reactive";
-import ReactiveMap, { MapEntry } from "@plastique/core/collection/ReactiveMap";
+import MapEntry from "@plastique/core/collection/map/MapEntry";
+import ReactiveReadonlyMap from "@plastique/core/collection/map/ReactiveReadonlyMap";
 
 @Reactive(function (this: TabList){
 let entry: MapEntry<string, string>;
@@ -20,9 +21,9 @@ let entry: MapEntry<string, string>;
 </div>
 `})
 class TabList {
-    protected readonly slotNameToName: ReactiveMap<string, string>;
+    protected readonly slotNameToName: ReactiveReadonlyMap<string, string>;
     protected selected: string;
-    constructor(slotNameToName: ReactiveMap<string, string>, activeSlotName?: string) {
+    constructor(slotNameToName: ReactiveReadonlyMap<string, string>, activeSlotName?: string) {
         this.slotNameToName = slotNameToName;
         this.selected = activeSlotName;
     }

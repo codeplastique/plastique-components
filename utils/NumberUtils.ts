@@ -1,6 +1,18 @@
 export default class NumberUtils {
+    /**
+     * @return true if the value contains only positive digits, false otherwise
+     */
     public static isDigitable(value: string): boolean {
-        let pattern = /^[0-9]+$/;
+        let pattern = /^\d+$/;
+        return pattern.test(value.trim());
+    }
+
+
+    /**
+     * @return true if the value contains a positive floating point number with a dot delimiter, false otherwise
+     */
+    public static isFloat(value: string){
+        let pattern = /^\d+\.\d+$/;
         return pattern.test(value.trim());
     }
 
