@@ -23,10 +23,11 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     }
 
     protected updateMainSelected(): void{
-        this.selectedOption = this.selectedOptions.length == 0?
+        let newOption = this.selectedOptions.length == 0?
             null
             :
             new DropdownOption(null, this.selectedOptions.map(o => o.text).join(', '))
+        this.selectOption(newOption);
     }
 
     protected isOptionSelected(option: DropdownOption<V>): boolean{
@@ -71,8 +72,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     }
 
     public removeSelected(): void{
-        //required
-        this.selectedOption = null
+        super.removeSelected()
         this.selectedOptions = [];
     }
 

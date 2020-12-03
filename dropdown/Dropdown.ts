@@ -8,10 +8,10 @@ import Inject from "@plastique/core/component/Inject";
 import TemplateIterator from "@plastique/core/utils/TemplateIterator";
 import Jsonable from "@plastique/core/hash/Jsonable";
 import FakeDropdownOption from "./FakeDropdownOption";
-import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 import Focusable from "../state/Focusable";
 import Emptyable from "../state/Emptyable";
+import RequirableValidable from "../state/RequirableValidable";
 
 @Reactive(function(this: Dropdown<any>){
 let option: DropdownOption<any>, iter: TemplateIterator;
@@ -40,7 +40,7 @@ let $event: MouseEvent;
     <input class="Dropdown__search form-control"
            v:readonly="${!this.isSearchable || !this.isActive}"
            v:ref="${this.inputElement}"
-           v:classappend="${!this.isValid()? 'is-invalid' : ''}"
+           v:classappend="${!this.isValueValid? 'is-invalid' : ''}"
            autocomplete="off"
            v:value="${this.searchText}"
            v:oninput="${this.filterOptions}"
@@ -72,7 +72,7 @@ let $event: MouseEvent;
     </div>
 </div>    
 `})
-class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptyable{
+class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusable, Emptyable{
     @InitEvent public static readonly SELECT_OPTION_EVENT: AppEvent<DropdownOption<any>>;
 
     private static readonly ELEMENTS_IN_MENU = 7;
@@ -81,13 +81,14 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
     public isFiltered: boolean;
     public isSearchable: boolean;
     public isNotEmptiable: boolean;
-    protected isRequired: boolean;
+    public isRequired: boolean;
     protected isLoading: boolean;
     protected pointer: number;
     protected menuHeight: number;
-    public optionHeight: number = 38; //px
+    public readonly optionHeight: number = 38; //px
     protected isStraight: boolean;
     public disabled: boolean;
+    protected isValueValid: boolean;
 
     protected options: DropdownOption<V>[];
     protected filteredOptions: DropdownOption<V>[] = [];
@@ -107,9 +108,9 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
         isSearchable?: boolean,
         isNotEmptiable?: boolean,
         protected isSelfOptionEnable?: boolean,
-        protected isReplenishable?: boolean,
         protected isReverse?: boolean
     ) {
+        this.isValueValid = true;
         this.options = options;
         if(selected !== void 0)
             this.setSelected(selected)
@@ -140,7 +141,9 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
         // if(this.filteredOptions.length == 0)
         //     return;
         // this.optionHeight = parseInt(window.getComputedStyle(this.filteredOptions[0].getElement()).height);
-        this.menuHeight = this.optionHeight * (this.filteredOptions.length > Dropdown.ELEMENTS_IN_MENU ? Dropdown.ELEMENTS_IN_MENU : this.filteredOptions.length);
+        this.menuHeight = this.optionHeight
+            *
+            (this.filteredOptions.length > Dropdown.ELEMENTS_IN_MENU ? Dropdown.ELEMENTS_IN_MENU : this.filteredOptions.length);
 
         if(!this.isReverse)
             this.isStraight = window.innerHeight >= (this.inputElement.getBoundingClientRect().bottom + this.menuHeight);
@@ -170,7 +173,7 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
                 )
                     return this.closeOptions();
 
-                this.selectedOption = newOption;
+                this.selectOption(newOption)
                 this.fireEventOnParents(Dropdown.SELECT_OPTION_EVENT, newOption);
 
             }
@@ -211,7 +214,7 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
 
     protected selectItem (option: DropdownOption<V>, event?: MouseEvent, isSilent?: boolean): void{
         if(this.selectedOption != option) {
-            this.selectedOption = option;
+            this.selectOption(option)
             if(!isSilent)
                 this.fireEventOnParents(Dropdown.SELECT_OPTION_EVENT, option);
             this.searchText = '';
@@ -231,13 +234,18 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
         let options = this.options;
         let option = options.find(o => o.value == value);
         if(option == null && value == null)
-            this.selectedOption = null
+            this.removeSelected();
         else
-            this.selectedOption = option || new FakeDropdownOption(String(value))
+            this.selectOption(option || new FakeDropdownOption(String(value)))
+    }
+
+    protected selectOption(option: DropdownOption<V>): void{
+        this.selectedOption = option;
+        this.verify();
     }
 
     public removeSelected(): void{
-        this.selectedOption = null;
+        this.selectOption(null)
     }
 
     public toJSON(): Object | Object[] {
@@ -246,11 +254,18 @@ class Dropdown<V> implements Jsonable, Validable, Disableable, Focusable, Emptya
     }
 
     public setRequired(isRequired: boolean): void{
-        this.isRequired = isRequired;
+        if(this.isRequired !== isRequired) {
+            this.isRequired = isRequired;
+            this.verify();
+        }
     }
 
-    public isValid(): boolean {
-        return !this.isFakeSelected() && (!this.isRequired || this.isSelected());
+    public isValid(): boolean{
+        return this.isValueValid
+    }
+
+    protected verify(): boolean {
+        return this.isValueValid = (!this.isRequired || this.isSelected()) && !this.isFakeSelected()
     }
 
     public isSelected(): boolean{

@@ -20,9 +20,10 @@ import Validable from "../state/Validable";
 class Checkbox implements Jsonable, Validable, Disableable{
     @InitEvent public static readonly CHANGE_EVENT: AppEvent<boolean>
     @OnChange(Checkbox.prototype.notify)
-    public value: boolean
+    protected value: boolean
     public isRequired: boolean
-    public disabled: boolean
+    protected disabled: boolean
+    protected isSilent: boolean
 
     constructor(private description?: string, value?: boolean) {
         this.value = value;
@@ -36,11 +37,22 @@ class Checkbox implements Jsonable, Validable, Disableable{
     }
 
     protected notify(): void{
-        this.fireEventOnParents(Checkbox.CHANGE_EVENT, this.value)
+        if(!this.isSilent && this.isComponentAttached())
+            this.fireEventOnParents(Checkbox.CHANGE_EVENT, this.value)
     }
 
     public setRequired(isRequired: boolean): void{
         this.isRequired = isRequired;
+    }
+
+    public toggleValue(): void{
+        this.setValue(!this.value)
+    }
+
+    public setValue(value: boolean): void{
+        this.isSilent = true;
+        this.value = value;
+        this.isSilent = false
     }
 
     public isDisabled(): boolean{

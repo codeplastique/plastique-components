@@ -10,10 +10,9 @@ export default class LazyDropdown<V> extends Dropdown<V>{
         isSearchable?: boolean,
         isNotEmptiable?: boolean,
         isSelfOptionEnable?: boolean,
-        isReplenishable?: boolean,
         isReverse?: boolean
     ) {
-        super([], void 0, isSearchable, isNotEmptiable, isSelfOptionEnable, isReplenishable, isReverse)
+        super([], void 0, isSearchable, isNotEmptiable, isSelfOptionEnable, isReverse)
     }
 
     public openOptions() {
@@ -30,11 +29,13 @@ export default class LazyDropdown<V> extends Dropdown<V>{
         return this.optionsProducer()
             .then(opts => {
                 let val = opts[0]
-                if(Array.isArray(val))
-                    [this.options, this.selectedOption] = opts as Array<any>
-                else {
+                if(Array.isArray(val)) {
+                    let [options, selected] = opts as Array<any>
+                    this.options = options;
+                    this.selectOption(selected)
+                }else {
                     this.options = opts as Array<any>;
-                    this.selectedOption = null;
+                    this.removeSelected();
                 }
                 this.isLoaded = true;
             })
@@ -47,7 +48,6 @@ export default class LazyDropdown<V> extends Dropdown<V>{
         isSearchable?: boolean,
         isNotEmptiable?: boolean,
         isSelfOptionEnable?: boolean,
-        isReplenishable?: boolean,
         isReverse?: boolean
     ): LazyDropdown<V>{
         let producer = () => optionsPromise().then(opts => {
@@ -57,6 +57,6 @@ export default class LazyDropdown<V> extends Dropdown<V>{
             }else
                 return opts;
         }) as any
-        return new LazyDropdown<V>(producer, isSearchable, isNotEmptiable, isSelfOptionEnable, isReplenishable, isReverse);
+        return new LazyDropdown<V>(producer, isSearchable, isNotEmptiable, isSelfOptionEnable, isReverse);
     }
 }

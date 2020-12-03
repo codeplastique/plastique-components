@@ -13,11 +13,12 @@ export default class ValidableNumber extends ValidableField {
         );
     }
 
+    protected getErrorMessage(): string {
+        return I18n.text('number_incorrect');
+    }
+
     protected validate(value: string): boolean {
-        if(value.length > 0 && !NumberUtils.isDigitable(value))
-            this.errorMessage = I18n.text('number_incorrect');
-        else
-            return true
+        return NumberUtils.isDigitable(value)
     }
 
     public toJSON(): Object | Object[] {

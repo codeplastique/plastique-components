@@ -5,10 +5,10 @@ import AppEvent from "@plastique/core/event/AppEvent";
 import Jsonable from "@plastique/core/hash/Jsonable";
 import OnChange from "@plastique/core/component/OnChange";
 import Inject from "@plastique/core/component/Inject";
-import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 import Emptyable from "../state/Emptyable";
 import Focusable from "../state/Focusable";
+import RequirableValidable from "../state/RequirableValidable";
 
 @Reactive(function(this: ValidableField){
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
@@ -22,40 +22,39 @@ import Focusable from "../state/Focusable";
         v:disabled="${this.disabled}"
         v:classappend="${!this.isValueValid ? 'is-invalid' : ''}"
         v:placeholder="${this.placeholder}">
-    <div v:if="${!this.isValueValid && this.errorMessage}" v:text="${this.errorMessage}" class="Validable-field__message"></div>
+        
+    <div 
+        class="Validable-field__message"
+        v:if="${!this.isValueValid && this.getErrorMessage()}" 
+        v:text="${this.getErrorMessage()}"></div>
  </div>
 `})
-class ValidableField implements Jsonable, Validable, Disableable, Emptyable, Focusable{
+class ValidableField implements Jsonable, RequirableValidable, Disableable, Emptyable, Focusable{
     @InitEvent public static readonly CHANGE_EVENT: AppEvent<ValidableField>
 
-    @OnChange(ValidableField.prototype.verify) protected value: string;
+    @OnChange(ValidableField.prototype.onChange)
+    protected value: string;
     protected isValueValid: boolean;
     public placeholder: string;
-    protected errorMessage: string
-    public isSilent: boolean
     public isRequired: boolean
     protected disabled: boolean
     public inputType: 'text' | 'password' = 'text';
+
     @Inject private inputElem: HTMLInputElement
 
     constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean) {
         this.value = value == null? '': value.toString();
         this.placeholder = placeholder == null? '': placeholder.toString();
         this.isRequired = isRequired;
-        this.isValueValid = true;
+        this.verify();
     }
 
-    public setRequired(isRequired: boolean, silent?: boolean): void{
+    public setRequired(isRequired: boolean): void{
         if(this.isRequired == isRequired)
             return;
 
         this.isRequired = isRequired;
-        if(!this.isSilent && silent){
-            this.isSilent = true
-            this.verify()
-            this.isSilent = false
-        }else
-            this.verify()
+        this.verify();
     }
 
     public setDisabled(isDisabled: boolean): void{
@@ -67,15 +66,16 @@ class ValidableField implements Jsonable, Validable, Disableable, Emptyable, Foc
     }
 
     protected validate(value: string): boolean{
-        return true
+        return true;
     }
 
-    public verify(): void{
-        this.isValueValid = (!this.isRequired && this.isEmpty()) || this.validate(this.getValue());
-        if(this.isValueValid)
-            this.errorMessage = null;
-        if(!this.isSilent && this.isComponentAttached())
-            this.fireEventOnParents(ValidableField.CHANGE_EVENT, this);
+    protected getErrorMessage(): string{
+        return;
+    }
+
+    protected onChange(): void{
+        this.verify();
+        this.fireEventOnParents(ValidableField.CHANGE_EVENT, this);
     }
 
     public getValue(): string {
@@ -87,7 +87,22 @@ class ValidableField implements Jsonable, Validable, Disableable, Emptyable, Foc
     }
 
     public setValue(value: string): void{
-        this.value = value;
+        if(this.value !== value){
+            if(this.isComponentAttached()){
+                //set empty parent for the fireEventOnParents ignoring
+                this.runWithFakeParents(() => this.value = value, null)
+            }else {
+                this.value = value;
+                this.verify();
+            }
+        }
+    }
+
+    /**
+     * @return true if the field is valid, false otherwise
+     */
+    protected verify(): void{
+        this.isValueValid = (!this.isRequired || !this.isEmpty()) && this.validate(this.getValue());
     }
 
     public isValid(): boolean{

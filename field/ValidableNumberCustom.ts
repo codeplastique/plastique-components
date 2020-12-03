@@ -16,12 +16,11 @@ export default class ValidableNumberCustom extends ValidableNumber{
         this.error = errorMessage;
     }
 
+    protected getErrorMessage(): string {
+        return this.error;
+    }
+
     protected validate(value: string): boolean {
-        if(!super.validate(value))
-            return false;
-        else if(!this.validator(+value)){
-            this.errorMessage = this.error
-        }else
-            return true
+        return super.validate(value) && this.validator(+value);
     }
 }

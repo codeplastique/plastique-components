@@ -1,5 +1,6 @@
 import ValidableNumber from "./ValidableNumber";
 import Reactive from "@plastique/core/component/Reactive";
+import I18n from "@plastique/core/utils/I18n";
 
 @Reactive
 export default class ValidableRangeNumber extends ValidableNumber{
@@ -9,11 +10,12 @@ export default class ValidableRangeNumber extends ValidableNumber{
         this.range = range;
     }
 
-    protected validate(value: string): boolean {
-        if(!super.validate(value))
-            return false;
+    protected getErrorMessage(): string {
+        return I18n.text('number_range_incorrect');
+    }
 
+    protected validate(value: string): boolean {
         let [from, till] = this.range;
-        return !(value.length > 0 && (+value < from || +value > till));
+        return super.validate(value) && +value >= from && +value <= till;
     }
 }

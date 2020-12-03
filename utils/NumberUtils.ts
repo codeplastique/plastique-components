@@ -3,6 +3,8 @@ export default class NumberUtils {
      * @return true if the value contains only positive digits, false otherwise
      */
     public static isDigitable(value: string): boolean {
+        if(value.length == 0)
+            return false;
         let pattern = /^\d+$/;
         return pattern.test(value.trim());
     }

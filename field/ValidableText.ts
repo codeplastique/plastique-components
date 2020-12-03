@@ -13,10 +13,11 @@ export default class ValidableText extends ValidableField{
         this.error = errorMessage;
     }
 
+    protected getErrorMessage(): string {
+        return this.error;
+    }
+
     protected validate(value: string): boolean {
-        if(!this.validator(value)){
-            this.errorMessage = this.error
-        }else
-            return true
+        return this.validator(value);
     }
 }
