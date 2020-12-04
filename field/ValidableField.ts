@@ -50,11 +50,10 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
     }
 
     public setRequired(isRequired: boolean): void{
-        if(this.isRequired == isRequired)
-            return;
-
-        this.isRequired = isRequired;
-        this.verify();
+        if(this.isRequired !== isRequired) {
+            this.isRequired = isRequired;
+            this.verify();
+        }
     }
 
     public setDisabled(isDisabled: boolean): void{
@@ -102,7 +101,7 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
      * @return true if the field is valid, false otherwise
      */
     protected verify(): void{
-        this.isValueValid = (!this.isRequired || !this.isEmpty()) && this.validate(this.getValue());
+        this.isValueValid = this.isEmpty()? !this.isRequired: this.validate(this.getValue());
     }
 
     public isValid(): boolean{
