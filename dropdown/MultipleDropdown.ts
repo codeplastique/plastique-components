@@ -8,15 +8,16 @@ import Dropdown from "./Dropdown";
 export default class MultipleDropdown<V> extends Dropdown<V>{
     @InitEvent public static readonly REMOVE_OPTION_EVENT: AppEvent<DropdownOption<any>>
 
-    public selectedOptions: DropdownOption<V>[];
+    public readonly selectedOptions: DropdownOption<V>[];
 
     constructor(
         options: DropdownOption<V>[],
         selectedValues: V[],
         isSearchable?: boolean,
-        isNotEmptiable?: boolean
+        isRequired?: boolean,
+        isReverse?: boolean
     ) {
-        super(options, void 0, isSearchable, isNotEmptiable)
+        super(options, void 0, isSearchable, isRequired, false, isReverse)
         this.selectedOptions = [];
         selectedValues = selectedValues || [];
         this.select(selectedValues)
@@ -73,7 +74,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
 
     public removeSelected(): void{
         super.removeSelected()
-        this.selectedOptions = [];
+        this.selectedOptions.clear();
     }
 
     public select(values: V[]): void{

@@ -11,10 +11,10 @@ export default class DynamicDropdown<V> extends Dropdown<V>{
         private optionProducer: ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>),
         selected?: V,
         isSearchable?: boolean,
-        isNotEmptiable?: boolean,
+        isRequired?: boolean,
         isCustomOptionEnable?: boolean
     ) {
-        super([], selected, isSearchable, isNotEmptiable, isCustomOptionEnable);
+        super([], selected, isSearchable, isRequired, isCustomOptionEnable);
     }
 
     public setOptionProducer(value: (from: number, count: number, query: string) => Promise<DropdownOption<V>[]>) {

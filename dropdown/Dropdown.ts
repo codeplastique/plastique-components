@@ -25,10 +25,11 @@ let $event: MouseEvent;
     
     <i class="fas fa-spinner fa-spin Dropdown__load-icon" v:if="${this.isLoading}"></i>
     <i class="fas fa-caret-down Dropdown__icon"
-        v:if="${!this.isLoading && (!this.hasAnySelected() || this.isNotEmptiable)}"
+        v:if="${!this.isLoading && (!this.hasAnySelected() || this.isRequired)}"
         v:classappend="${this.isSelfOptionEnable ? 'invisible' : ''}"></i>
+        
     <i class="fas fa-times Dropdown__close-btn"
-        v:if="${!this.isLoading && this.hasAnySelected() && !this.isNotEmptiable}"
+        v:if="${!this.isLoading && this.hasAnySelected() && !this.isRequired}"
         v:onclick.stop="${this.selectItem(null)}"></i>
         
     <div class="Dropdown__text"
@@ -79,8 +80,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
 
     public isActive: boolean;
     public isFiltered: boolean;
-    public isSearchable: boolean;
-    public isNotEmptiable: boolean;
+    public readonly isSearchable: boolean;
     public isRequired: boolean;
     protected isLoading: boolean;
     protected pointer: number;
@@ -106,16 +106,17 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         options: DropdownOption<V>[],
         selected?: V,
         isSearchable?: boolean,
-        isNotEmptiable?: boolean,
+        isRequired?: boolean,
         protected isSelfOptionEnable?: boolean,
         protected isReverse?: boolean
     ) {
-        this.isValueValid = true;
+        this.isRequired = isRequired;
         this.options = options;
         if(selected !== void 0)
             this.setSelected(selected)
+        else
+            this.verify();
         this.isSearchable = isSearchable;
-        this.isNotEmptiable = isNotEmptiable;
         this.filteredOptions = [];
         this.isStraight = !isReverse;
     }
@@ -232,7 +233,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
 
     public setSelected(value: V): void{
         let options = this.options;
-        let option = options.find(o => o.value == value);
+        let option = options.find(o => o.value === value);
         if(option == null && value == null)
             this.removeSelected();
         else

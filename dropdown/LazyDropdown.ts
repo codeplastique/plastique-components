@@ -8,11 +8,11 @@ export default class LazyDropdown<V> extends Dropdown<V>{
     constructor(
         private optionsProducer: DropdownOptionsProducer<V>,
         isSearchable?: boolean,
-        isNotEmptiable?: boolean,
+        isRequired?: boolean,
         isSelfOptionEnable?: boolean,
         isReverse?: boolean
     ) {
-        super([], void 0, isSearchable, isNotEmptiable, isSelfOptionEnable, isReverse)
+        super([], void 0, isSearchable, isRequired, isSelfOptionEnable, isReverse)
     }
 
     public openOptions() {
@@ -46,7 +46,7 @@ export default class LazyDropdown<V> extends Dropdown<V>{
         optionsPromise: () => Promise<DropdownOption<V>[]>,
         selectedValue?: V,
         isSearchable?: boolean,
-        isNotEmptiable?: boolean,
+        isRequired?: boolean,
         isSelfOptionEnable?: boolean,
         isReverse?: boolean
     ): LazyDropdown<V>{
@@ -57,6 +57,6 @@ export default class LazyDropdown<V> extends Dropdown<V>{
             }else
                 return opts;
         }) as any
-        return new LazyDropdown<V>(producer, isSearchable, isNotEmptiable, isSelfOptionEnable, isReverse);
+        return new LazyDropdown<V>(producer, isSearchable, isRequired, isSelfOptionEnable, isReverse);
     }
 }

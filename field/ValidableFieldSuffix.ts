@@ -5,7 +5,7 @@ import Jsonable from "@plastique/core/hash/Jsonable";
 import Disableable from "../state/Disableable";
 import Validable from "../state/Validable";
 
-@Reactive(function (this: ValidableFieldSuffix) {
+@Reactive(function (this: ValidableFieldSuffix<any>) {
 `<div class="input-group flex-nowrap" xmlns:v="http://github.com/codeplastique/plastique">
     <field v:component="${this.field}" v:classappend="'Validable-field_with-prefix'"></field>
     <div class="input-group-append">
@@ -13,10 +13,10 @@ import Validable from "../state/Validable";
     </div>
 </div>
 `})
-class ValidableFieldSuffix implements Jsonable, Disableable, Validable{
+class ValidableFieldSuffix<V extends ValidableField> implements Jsonable, Disableable, Validable{
     constructor(
-        public field: ValidableField,
-        public suffix: string
+        public readonly field: V,
+        public readonly suffix: string
     ) {}
 
     public toJSON(): Object | Object[] {
@@ -37,4 +37,4 @@ class ValidableFieldSuffix implements Jsonable, Disableable, Validable{
 }
 
 export default ValidableFieldSuffix;
-interface ValidableFieldSuffix extends Component {}
+interface ValidableFieldSuffix<V extends ValidableField> extends Component {}
