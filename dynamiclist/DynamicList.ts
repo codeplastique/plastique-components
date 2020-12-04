@@ -5,9 +5,9 @@ import Reactive from "@plastique/core/component/Reactive";
 import AppEvent from "@plastique/core/event/AppEvent";
 import InitEvent from "@plastique/core/event/InitEvent";
 import Listener from "@plastique/core/event/Listener";
-import Validable from "../state/Validable";
 import Disableable from "../state/Disableable";
 import Emptyable from "../state/Emptyable";
+import Validable from "../state/Validable";
 
 @Reactive(function (this: DynamicList<DynamicListEntry>){
 let entry: DynamicListEntry;
@@ -47,11 +47,14 @@ class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Di
     public addEmptyEntry(onlyIfRequired?: boolean): void {
         if(onlyIfRequired && this.entries.find(e => e.isEmpty()) != null)
             return
-        this.entries.push(this.genNewEntry());
+        this.addEntry(this.genNewEntry());
     }
 
-    public addEntryToTop(entry: E): void {
-        this.entries.unshift(entry);
+    public addEntry(entry: E, toTop?: boolean): void {
+        if(toTop)
+            this.entries.unshift(entry);
+        else
+            this.entries.push(entry)
     }
 
     protected genNewEntry(): E{
@@ -79,7 +82,7 @@ class DynamicList<E extends DynamicListEntry> implements Jsonable, Validable, Di
         this.entries.forEach(e => e.setDisabled(isDisabled));
     }
 
-    public getEntries(): E[]{
+    public getEntries(): ReadonlyArray<E>{
         return this.entries;
     }
 
