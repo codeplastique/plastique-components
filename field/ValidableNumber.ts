@@ -22,6 +22,6 @@ export default class ValidableNumber extends ValidableField {
     }
 
     public toJSON(): Object | Object[] {
-        return this.value.length == 0? null: +this.value;
+        return this.isEmpty()? null: +this.getValue();
     }
 }

@@ -14,6 +14,7 @@ export default class ValidableNumberCustom extends ValidableNumber{
     ) {
         super(value, placeholder, isRequired);
         this.error = errorMessage;
+        this.verify();
     }
 
     protected getErrorMessage(): string {
@@ -21,6 +22,8 @@ export default class ValidableNumberCustom extends ValidableNumber{
     }
 
     protected validate(value: string): boolean {
+        if(this.validator === void 0)
+            return;
         return super.validate(value) && this.validator(+value);
     }
 }

@@ -11,6 +11,7 @@ export default class ValidableText extends ValidableField{
     ) {
         super(value, placeholder, isRequired);
         this.error = errorMessage;
+        this.verify();
     }
 
     protected getErrorMessage(): string {
@@ -18,6 +19,8 @@ export default class ValidableText extends ValidableField{
     }
 
     protected validate(value: string): boolean {
+        if(this.validator === void 0)
+            return;
         return this.validator(value);
     }
 }
