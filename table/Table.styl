@@ -1,0 +1,118 @@
+Plastique-Table($iconFontFamily, $offset, $headerHeight) {
+  Offset_typeOf($offset);
+
+  .Table {
+    $name = '.Table'
+    $padding = 1.25rem;
+
+    &_clickable{
+      {$name}__entry{
+        cursor pointer
+        &:hover {
+          background: rgb(238, 243, 255);
+        }
+      }
+    }
+
+    &__headers {
+      background white
+      z-index 2
+      display flex
+      padding-top: $padding
+      top: $offset.top;
+    }
+
+    &__header {
+      line-height: $headerHeight !important;
+      padding-top 0 !important
+      padding-bottom 0 !important
+      white-space nowrap
+      color: #33363c !important;
+      text-align left !important
+      font-size 90% !important
+
+      &_sort {
+        position relative;
+        cursor pointer !important
+        $selectedColor = #2a72ff;
+
+        &:hover {
+          color $selectedColor !important
+        }
+
+        &:before
+        &:after {
+          position absolute;
+          opacity .2;
+          font-family $iconFontFamily;
+          right .8rem;
+          font-size 1rem;
+          color black;
+        }
+
+        &:before {
+          content "\f0de";
+          margin-bottom -0.06rem
+        }
+
+        &:after {
+          content "\f0dd";
+          margin-top 0.06rem
+        }
+
+        &-desc {
+          color $selectedColor !important
+
+          &:after {
+            opacity 1;
+            color $selectedColor;
+          }
+        }
+
+        &-asc {
+          color $selectedColor !important
+
+          &:before {
+            opacity 1;
+            color $selectedColor;
+          }
+        }
+      }
+    }
+
+
+    &__entries {
+      position relative;
+      width 100%
+
+      &_no-edit {
+        {$name} {
+          &__menu-btn {
+            display none
+          }
+
+          &__order-message {
+            display none !important
+          }
+        }
+      }
+    }
+
+    &__entry {
+      border-top: 0.06rem solid rgba(128, 128, 128, 0.15);
+      display: flex;
+      align-items center
+      position relative
+      background white
+
+      &_selected {
+        background: #e5edff !important
+      }
+
+      &_moving {
+        z-index 1
+        background: #e5edff !important
+      }
+    }
+  }
+}

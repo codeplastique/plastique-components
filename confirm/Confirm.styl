@@ -1,0 +1,35 @@
+Plastique-Confirm($padding = 2rem, $width = 35rem) {
+$name = '.Confirm'
+  .Confirm {
+    &__content{
+      padding: $padding
+      width: $width
+    }
+
+    &__header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom 2rem
+    }
+
+    &__close-btn{
+      font-size: 1rem;
+      cursor: pointer;
+      color: #6c757d;
+      &:hover{
+        color: #585c60;
+      }
+    }
+
+    &__footer{
+      margin-top 2rem
+      display flex
+      justify-content flex-end
+    }
+
+    &__btn{
+      margin-left .5rem
+    }
+  }
+}

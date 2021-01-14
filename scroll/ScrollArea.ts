@@ -4,7 +4,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AfterAttach from "@plastique/core/component/AfterAttach";
 import BeforeDetach from "@plastique/core/component/BeforeDetach";
 
-@Reactive(() => {
+@Reactive(function(this: ScrollArea) {
 `<section xmlns:v="http://github.com/codeplastique/plastique" class="Scroll-area">
     <v:slot/>
 </section>

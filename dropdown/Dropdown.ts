@@ -91,7 +91,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     protected isValueValid: boolean;
 
     protected options: DropdownOption<V>[];
-    protected filteredOptions: DropdownOption<V>[] = [];
+    protected filteredOptions: DropdownOption<V>[];
     protected selectedOption: DropdownOption<V>;
 
     protected searchText: string = '';
@@ -110,6 +110,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         protected isSelfOptionEnable?: boolean,
         protected isReverse?: boolean
     ) {
+        this.filteredOptions = [];
         this.isRequired = isRequired;
         this.options = options;
         if(selected !== void 0)
@@ -117,7 +118,6 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         else
             this.verify();
         this.isSearchable = isSearchable;
-        this.filteredOptions = [];
         this.isStraight = !isReverse;
     }
 
@@ -186,7 +186,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         this.searchText = '';
         this.isFiltered = false;
         this.isActive = false;
-        this.filteredOptions = null;
+        this.filteredOptions = [];
     }
 
     protected prevItem(): void {

@@ -9,6 +9,7 @@ import Disableable from "../state/Disableable";
 import Emptyable from "../state/Emptyable";
 import Focusable from "../state/Focusable";
 import RequirableValidable from "../state/RequirableValidable";
+import I18n from "@plastique/core/utils/I18n";
 
 @Reactive(function(this: ValidableField){
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
@@ -25,8 +26,8 @@ import RequirableValidable from "../state/RequirableValidable";
         
     <div 
         class="Validable-field__message"
-        v:if="${!this.isValueValid && this.getErrorMessage()}" 
-        v:text="${this.getErrorMessage()}"></div>
+        v:if="${!this.disabled &&!this.isValueValid && this.getError()}" 
+        v:text="${this.getError()}"></div>
  </div>
 `})
 class ValidableField implements Jsonable, RequirableValidable, Disableable, Emptyable, Focusable{
@@ -72,6 +73,10 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
         return;
     }
 
+    private getError(): string{
+        return this.isEmpty() && this.isRequired? I18n.text('field_required'): this.getErrorMessage();
+    }
+
     protected onChange(): void{
         this.verify();
         this.fireEventOnParents(ValidableField.CHANGE_EVENT, this);
@@ -85,13 +90,14 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
         return this.getValue().length == 0;
     }
 
-    public setValue(value: string): void{
-        if(this.value !== value){
+    public setValue(value: string | number): void{
+        let val = value == null? '': value.toString()
+        if(this.value !== val){
             if(this.isComponentAttached()){
                 //set empty parent for the fireEventOnParents ignoring
-                this.runWithFakeParents(() => this.value = value, null)
+                this.runWithFakeParents(() => this.value = val, null)
             }else {
-                this.value = value;
+                this.value = val;
                 this.verify();
             }
         }

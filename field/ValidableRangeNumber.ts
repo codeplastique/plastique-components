@@ -12,7 +12,7 @@ export default class ValidableRangeNumber extends ValidableNumber{
     }
 
     protected getErrorMessage(): string {
-        return I18n.text('number_range_incorrect', this.range[0].toString(), this.range[1].toString());
+        return I18n.text('number_range_incorrect', this.range[0], this.range[1]);
     }
 
     protected validate(value: string): boolean {

@@ -19,10 +19,12 @@ let iter: TemplateIterator
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Switcher">
     <div class="custom-control custom-radio Switcher__radio" v:each="entry, iter: ${this.nameToValue}">
         <input class="custom-control-input" 
+                type="radio" 
                 v:classappend="${!this.isValid()? 'is-invalid': ''}" 
                 v:disabled="${this.disabled}"
-                type="radio" v:value="${entry.value}" 
-                v:model="${this.value}" v:id="${this.hashCode() +'_'+ iter.index}">
+                v:value="${entry.value}" 
+                v:model="${this.value}" 
+                v:id="${this.hashCode() +'_'+ iter.index}">
         <label class="custom-control-label" v:text="${entry.key}" v:for="${this.hashCode() +'_'+ iter.index}"></label>
     </div>
 </div>
@@ -34,7 +36,7 @@ class Switcher implements Jsonable, Validable, Disableable{
     public isRequired: boolean
     protected disabled: boolean
 
-    constructor(private nameToValue: ReactiveReadonlyMap<string, any>,
+    constructor(private readonly nameToValue: ReactiveReadonlyMap<string, any>,
                 value?: any
     ) {
         this.value = value;
@@ -65,7 +67,7 @@ class Switcher implements Jsonable, Validable, Disableable{
     }
 
     public isSelected(): boolean{
-        return this.value !== void 0
+        return this.nameToValue.values().includes(this.value)
     }
 }
 

@@ -1,9 +1,10 @@
 import ValidableField from "./ValidableField";
+import Types from "@plastique/core/base/Types";
 
 export default class ValidableText extends ValidableField{
-    private readonly error: string;
+    protected readonly error: string;
     constructor(
-        private validator: (text: string) => boolean,
+        protected validator: (text: string) => Promise<any> | boolean,
         value?: string,
         placeholder?: string,
         errorMessage?: string,
@@ -21,6 +22,19 @@ export default class ValidableText extends ValidableField{
     protected validate(value: string): boolean {
         if(this.validator === void 0)
             return;
-        return this.validator(value);
+        this.check(value);
+        return this.isValueValid;
+    }
+
+    // @Lazy(300)
+    protected check(value: string): void{
+        let result = this.validator(value);
+        if(Types.isBoolean(result))
+            this.isValueValid = result;
+        else
+            result.then(
+                () => this.isValueValid = true,
+                () => this.isValueValid = false
+            );
     }
 }

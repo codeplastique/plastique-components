@@ -28,6 +28,10 @@ Plastique-Validable-field() {
 
     &_invalid {
       &:hover {
+        {$name}__input{
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
         {$name}__message {
           background: #d53748;
           transition-delay: 0s !important
