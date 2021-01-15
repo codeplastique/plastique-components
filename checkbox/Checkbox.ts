@@ -7,14 +7,19 @@ import OnChange from "@plastique/core/component/OnChange";
 import Disableable from "../state/Disableable";
 import Validable from "../state/Validable";
 
-@Reactive(function (this: Checkbox) {
+type Props = {
+    /** checkbox description **/
+    label: string
+}
+
+@Reactive(function (this: Checkbox, props: Props) {
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="custom-control custom-checkbox">
     <input type="checkbox" class="custom-control-input" 
         v:classappend="${this.isRequired && !this.value? 'is-invalid': ''}" 
         v:id="${this.hashCode()}" 
         v:disabled="${this.disabled}"
         v:model="${this.value}">
-    <label class="custom-control-label" v:for="${this.hashCode()}" v:text="${this.description}"></label>
+    <label class="custom-control-label" v:for="${this.hashCode()}" v:text="${this.label || props.label}"></label>
 </div>
 `})
 class Checkbox implements Jsonable, Validable, Disableable{
@@ -24,7 +29,7 @@ class Checkbox implements Jsonable, Validable, Disableable{
     public isRequired: boolean
     protected disabled: boolean
 
-    constructor(private description?: string, value?: boolean) {
+    constructor(value?: boolean, protected readonly label?: string) {
         this.value = value;
     }
     public toJSON(): Object | Object[] {

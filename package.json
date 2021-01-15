@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@plastique/core": "^1.6.13",
+    "@plastique/core": "^1.6.15",
     "perfect-scrollbar": "1.5.0",
     "typescript": "3.2"
   },
