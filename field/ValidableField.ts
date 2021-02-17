@@ -26,7 +26,7 @@ import I18n from "@plastique/core/utils/I18n";
         
     <div 
         class="Validable-field__message"
-        v:if="${!this.disabled &&!this.isValueValid && this.getError()}" 
+        v:if="${!this.disabled && !this.isValueValid && this.getError()}" 
         v:text="${this.getError()}"></div>
  </div>
 `})
@@ -43,11 +43,12 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
 
     @Inject private inputElem: HTMLInputElement
 
-    constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean) {
+    constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean, ignoreInitVerifying?: boolean) {
         this.value = value == null? '': value.toString();
         this.placeholder = placeholder == null? '': placeholder.toString();
         this.isRequired = isRequired;
-        this.verify();
+        if(!ignoreInitVerifying)
+            this.verify();
     }
 
     public setRequired(isRequired: boolean): void{

@@ -15,8 +15,11 @@ import App from "@plastique/core/base/App";
 </div>
 `})
 class ButtonDropdown<D extends Dropdown<any>> implements Jsonable{
-    constructor(public dropdown: D, protected text?: string, public openAction?: Function) {
-    }
+    constructor(
+        public dropdown: D,
+        protected text?: string,
+        public openAction?: Function
+    ) {}
 
     protected open(): void{
         if(this.openAction)

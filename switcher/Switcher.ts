@@ -32,9 +32,9 @@ let iter: TemplateIterator
 class Switcher implements Jsonable, Validable, Disableable{
     @InitEvent public static readonly CHANGE_EVENT: AppEvent<boolean>
     @OnChange(Switcher.prototype.notify)
-    public value: any;
-    public isRequired: boolean
+    protected value: any;
     protected disabled: boolean
+    public isRequired: boolean
 
     constructor(private readonly nameToValue: ReactiveReadonlyMap<string, any>,
                 value?: any
@@ -44,6 +44,21 @@ class Switcher implements Jsonable, Validable, Disableable{
 
     private notify(): void{
         this.fireEventOnParents(Switcher.CHANGE_EVENT, this.value)
+    }
+
+    public setValue(value: any): void{
+        if(this.value !== value){
+            if(this.isComponentAttached()){
+                //set empty parent for the fireEventOnParents ignoring
+                this.runWithFakeParents(() => this.value = value, null)
+            }else {
+                this.value = value;
+            }
+        }
+    }
+
+    public getValue(): string{
+        return this.value;
     }
 
     public toJSON(): Object | Object[] {

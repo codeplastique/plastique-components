@@ -7,10 +7,10 @@ import ReactiveReadonlyMap from "@plastique/core/collection/map/ReactiveReadonly
 let entry: MapEntry<string, string>;
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Tabs">
     <div class="Tabs__menu nav nav-tabs nav-fill">
-        <li class="nav-item Tabs__item-wrap" v:each="entry: ${this.slotNameToName}">
+        <li class="nav-item Tabs__item-wrap" v:each="entry: ${this.keyToName}">
             <button class="nav-link Tabs__item" 
                 v:text="${entry.value}" 
-                v:onclick="${this.selectTab(entry.key)}"
+                v:onclick="${this.selectKey(entry.key)}"
                 v:classappend="${this.selected == entry.key? 'active Tabs__item_active': ''}">
             </button>
         </li>
@@ -21,18 +21,18 @@ let entry: MapEntry<string, string>;
 </div>
 `})
 class TabList {
-    protected readonly slotNameToName: ReactiveReadonlyMap<string, string>;
+    protected readonly keyToName: ReactiveReadonlyMap<string, string>;
     protected selected: string;
-    constructor(slotNameToName: ReactiveReadonlyMap<string, string>, activeSlotName?: string) {
-        this.slotNameToName = slotNameToName;
+    constructor(slotKeyToName: ReactiveReadonlyMap<string, string>, activeSlotName?: string) {
+        this.keyToName = slotKeyToName;
         this.selected = activeSlotName;
     }
 
-    public selectTab(slotName: string): void{
-        this.selected = slotName;
+    public selectKey(slotKey: string): void{
+        this.selected = slotKey;
     }
 
-    public getSelectedTab(): string{
+    public getSelectedKey(): string{
         return this.selected;
     }
 }

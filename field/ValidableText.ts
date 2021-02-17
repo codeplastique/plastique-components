@@ -26,7 +26,6 @@ export default class ValidableText extends ValidableField{
         return this.isValueValid;
     }
 
-    // @Lazy(300)
     protected check(value: string): void{
         let result = this.validator(value);
         if(Types.isBoolean(result))
