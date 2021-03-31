@@ -22,6 +22,10 @@ export default class DraggableList<V extends DraggablePositionable> implements D
         this.values = values;
     }
 
+    public getValues(): ReadonlyArray<V>{
+        return this.values;
+    }
+
     public setFluidValue(value: V): void{
         this.fluidValue = value;
         this.fluidIndex = this.values.indexOf(this.fluidValue);
@@ -55,12 +59,12 @@ export default class DraggableList<V extends DraggablePositionable> implements D
 
         //reset rule coordinates
         this.values.filter(r => r.yPos != 0 && r != this.fluidValue)
-            .forEach(r => this.updateRuleConnectors(r, 0));
+            .forEach(r => this.positionValue(r, 0));
 
         for (let i = 1; i < orderOffset + 1; i++) {
             let order = positioner.getRelativeYOffset() < 0? fluidIndex - i: fluidIndex + i;
             this.values[order].setCoordinates(0, 0);
-            this.updateRuleConnectors(this.values[order], this.height * offsetFactor);
+            this.positionValue(this.values[order], this.height * offsetFactor);
         }
         this.fluidValue.onDrag(xPos, yPos);
     }
@@ -74,9 +78,9 @@ export default class DraggableList<V extends DraggablePositionable> implements D
             if(!isFail && positioner.isChanged()) {
                 let fluidNewOrder = Math.round(this.fluidIndex + (this.fluidValue.yPos / this.height));
                 if (fluidNewOrder != this.fluidIndex) {
-                    this.values.move(this.fluidIndex, fluidNewOrder)
-                    //put the rule exactly in the frame
-                    this.updateRuleConnectors(this.fluidValue, (fluidNewOrder - this.fluidIndex) * this.height);
+                    this.values.move(this.fluidIndex, fluidNewOrder);
+                    this.positionValue(this.fluidValue, (fluidNewOrder - this.fluidIndex) * this.height)
+                    this.onValueChange(this.fluidValue, this.fluidIndex, fluidNewOrder);
                 }else
                     isFail = true; // nothing changes
             }
@@ -87,11 +91,11 @@ export default class DraggableList<V extends DraggablePositionable> implements D
         }
     }
 
-
-    public updateRuleConnectors(rule: V, y: number): void {
-        rule.setCoordinates(0, y);
-        rule.onDrag(0, y);
+    protected onValueChange(value: V, oldOrder: number, newOrder: number): void{
     }
 
-
+    protected positionValue(value: V, yPos: number): void {
+        value.setCoordinates(0, yPos);
+        value.onDrag(0, yPos);
+    }
 }
