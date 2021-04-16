@@ -41,7 +41,7 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
     protected disabled: boolean
     public inputType: 'text' | 'password' = 'text';
 
-    @Inject private inputElem: HTMLInputElement
+    @Inject protected inputElem: HTMLInputElement
 
     constructor(value?: string | number, placeholder?: string | number, isRequired?: boolean, ignoreInitVerifying?: boolean) {
         this.value = value == null? '': value.toString();
@@ -74,7 +74,7 @@ class ValidableField implements Jsonable, RequirableValidable, Disableable, Empt
         return;
     }
 
-    private getError(): string{
+    protected getError(): string{
         return this.isEmpty() && this.isRequired? I18n.text('field_required'): this.getErrorMessage();
     }
 
