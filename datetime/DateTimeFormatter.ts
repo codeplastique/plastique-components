@@ -89,9 +89,9 @@ export default class DateTimeFormatter{
             }else if(isSameDate){
                 return this.getDateTime(from) + delimiter + this.getDateTime(till)
             }else {
-                return isDefaultFromTime? this.getDate(from): this.getDateTime(till)
+                return (isDefaultFromTime? this.getDate(from): this.getDateTime(from))
                     + delimiter
-                    + isDefaultTillTime? this.getDate(from): this.getDateTime(till)
+                    + (isDefaultTillTime? this.getDate(till): this.getDateTime(till))
             }
         }else {
             if(from){
