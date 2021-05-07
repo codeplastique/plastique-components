@@ -1,5 +1,6 @@
 import Time from "./Time";
 import Day from "./Day";
+import I18n from "@plastique/core/utils/I18n";
 
 export default class DateTimeFormatter{
     constructor(
@@ -65,4 +66,48 @@ export default class DateTimeFormatter{
         let date = typeof arg === 'number'? new Date(arg): arg;
         return this.getDate(date) +' '+ this.getTime(date);
     }
+
+    public getDateTimeRange(
+        range: [Date?, Date?] | [number?, number?],
+        delimiter: string = ' – ',
+        showDefaultTime?: boolean
+    ): string{
+
+        let dates = (range as any[]).map(d => d == null? null: (d instanceof Date? d: new Date(d)))
+        let [from, till] = dates;
+        let isDefaultFromTime = !showDefaultTime && this.isDefaultTime(from)
+        let isDefaultTillTime = !showDefaultTime && this.isDefaultTime(till)
+
+        if(from && till){
+            let isSameDate = new Day(from).equals(new Day(till));
+
+            if(isDefaultFromTime && isDefaultTillTime) {
+                let fromDateString = this.getDate(from);
+                if(isSameDate)
+                    return fromDateString
+                return fromDateString + delimiter + this.getDate(till)
+            }else if(isSameDate){
+                return this.getDateTime(from) + delimiter + this.getDateTime(till)
+            }else {
+                return isDefaultFromTime? this.getDate(from): this.getDateTime(till)
+                    + delimiter
+                    + isDefaultTillTime? this.getDate(from): this.getDateTime(till)
+            }
+        }else {
+            if(from){
+                return I18n.text('from_date', isDefaultFromTime? this.getDate(from): this.getDateTime(from))
+            }else
+                return I18n.text('until_date', isDefaultTillTime? this.getDate(till): this.getDateTime(till))
+        }
+    }
+
+    protected isDefaultTime(date: Date): boolean{
+        if(date == null)
+            return false;
+        return (date.getHours() == 0 && date.getMinutes() == 0)
+            ||
+            (date.getHours() == 23 && date.getMinutes() == 59)
+    }
+
+    p
 }
