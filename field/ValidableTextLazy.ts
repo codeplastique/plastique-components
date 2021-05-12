@@ -7,9 +7,10 @@ export default class ValidableTextLazy extends ValidableText{
         value: string,
         placeholder: string,
         errorMessage?: string,
-        isRequired?: boolean
+        isRequired?: boolean,
+        ignoreInitVerifying?: boolean
     ) {
-        super(validator, value, placeholder, errorMessage, isRequired);
+        super(validator, value, placeholder, errorMessage, isRequired, ignoreInitVerifying);
     }
 
     @Lazy(300)

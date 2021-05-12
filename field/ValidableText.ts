@@ -8,11 +8,13 @@ export default class ValidableText extends ValidableField{
         value?: string,
         placeholder?: string,
         errorMessage?: string,
-        isRequired?: boolean
+        isRequired?: boolean,
+        ignoreInitVerifying?: boolean
     ) {
-        super(value, placeholder, isRequired);
+        super(value, placeholder, isRequired, true);
         this.error = errorMessage;
-        this.verify();
+        if(!ignoreInitVerifying)
+            this.verify();
     }
 
     protected getErrorMessage(): string {
@@ -20,8 +22,6 @@ export default class ValidableText extends ValidableField{
     }
 
     protected validate(value: string): boolean {
-        if(this.validator === void 0)
-            return;
         this.check(value);
         return this.isValueValid;
     }

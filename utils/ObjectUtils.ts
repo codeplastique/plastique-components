@@ -1,3 +1,6 @@
+import Types from "@plastique/core/base/Types";
+import {TypeDef} from "@plastique/core/base/Type";
+
 declare const Vue: any
 
 export default class ObjectUtils {
@@ -20,6 +23,16 @@ export default class ObjectUtils {
 
     public static isEquals(a: object, b: object): boolean {
         return JSON.stringify(a) == JSON.stringify(b)
+    }
+
+    public static getObjectFields<V>(obj: object, type?: TypeDef<V>): Array<V>{
+        let fields: Array<V> = [];
+        for (let fieldName in this) {
+            let field: any = this[fieldName];
+            if(type == null || Types.is(field, type))
+                fields.push(field)
+        }
+        return fields;
     }
 
 }
