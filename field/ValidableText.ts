@@ -26,6 +26,10 @@ export default class ValidableText extends ValidableField{
         return this.isValueValid;
     }
 
+    public setValueValid(isValid: boolean): void{
+        this.isValueValid = isValid;
+    }
+
     protected check(value: string): void{
         let result = this.validator(value);
         if(Types.isBoolean(result))
