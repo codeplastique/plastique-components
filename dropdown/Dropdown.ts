@@ -151,6 +151,8 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     }
 
     public openOptions(): void {
+        if(this.isActive)
+            return;
         this.isActive = true;
         this.isFiltered = false;
         this.searchText = this.isSelfOptionEnable && this.isSelected()? this.selectedOption.text: '';
@@ -183,6 +185,9 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     }
 
     public closeOptions(): void {
+        //TODO save focus
+        if(document.activeElement == this.inputElement)
+            (document.activeElement as any).blur()
         this.searchText = '';
         this.isFiltered = false;
         this.isActive = false;

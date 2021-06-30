@@ -22,6 +22,8 @@ export default class DynamicDropdown<V> extends Dropdown<V>{
     }
 
     public openOptions(): void {
+        if(this.isActive)
+            return;
         super.openOptions();
         this.filteredOptions = [];
         this.loadOptions().then(() => {
