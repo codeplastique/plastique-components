@@ -210,7 +210,14 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
             this.menuElement.scrollTop += this.optionHeight;
     }
     protected selectCurrentItem(event: MouseEvent, isSilent?: boolean): void{
-        this.selectItem(this.filteredOptions[this.pointer], event, isSilent);
+        let option: DropdownOption<V>
+        if(this.pointer >= 0){
+            option = this.filteredOptions[this.pointer];
+        }else if(this.isSelfOptionEnable && this.searchText.trim().length > 0){
+            option = new DropdownOption<V>(null, this.searchText.trim())
+        }
+        if(option)
+            this.selectItem(option, event, isSilent);
     }
 
     protected selectItem (option: DropdownOption<V>, event?: MouseEvent, isSilent?: boolean): void{
