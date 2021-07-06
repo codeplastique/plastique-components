@@ -3,7 +3,7 @@ import InitEvent from "@plastique/core/event/InitEvent";
 import AppEvent from "@plastique/core/event/AppEvent";
 import Reactive from "@plastique/core/component/Reactive";
 import Dropdown from "./Dropdown";
-import DropdownOptionsProducer from "./DropdownOptionsProducer";
+import Lazy from "@plastique/core/utils/Lazy";
 
 @Reactive
 export default class MultipleDropdown<V> extends Dropdown<V>{
@@ -12,10 +12,10 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     public readonly selectedOptions: DropdownOption<V>[];
 
     public isLoaded: boolean;
-    private readonly optionsProducer: DropdownOptionsProducer<V>;
+    private readonly optionsProducer: ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>);
 
     constructor(
-        options: DropdownOption<V>[] | DropdownOptionsProducer<V>,
+        options: DropdownOption<V>[] | ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>),
         selectedValues: V[],
         isSearchable?: boolean,
         isRequired?: boolean,
@@ -30,33 +30,48 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
 
 
     public openOptions() {
-        if(this.optionsProducer == null)
-            return super.openOptions();
+        if(this.isActive)
+            return;
+        super.openOptions();
 
-        if(this.isLoaded)
-            super.openOptions();
-        else
-            this.loadOptions().then(() => super.openOptions()).catch(() => {});
+        if(this.optionsProducer != null) {
+            this.filteredOptions = [];
+            this.loadOptions().then(() => {
+                if (this.menuElement)
+                    this.menuElement.addEventListener('scroll', () => {
+                        let bottomOfMenu = this.menuElement.scrollTop + this.menuElement.clientHeight >= (this.menuElement.scrollHeight);
+                        if (bottomOfMenu)
+                            this.loadOptions();
+                    })
+            });
+        }
+    }
+
+    protected filterOptions(event: Event | any): void{
+        this.searchText = event.currentTarget.value;
+        this.isFiltered = this.searchText.length > 0;
+        this.loadOptionsLimit();
+    }
+
+    @Lazy(400)
+    private loadOptionsLimit(): void{
+        this.filteredOptions = [];
+        this.loadOptions().then(() => {
+            this.pointer = this.filteredOptions.length > 0? 0: -1;
+        });
     }
 
     protected loadOptions(): Promise<void>{
-        if(this.isLoading)
-            return Promise.reject()
-        this.isLoading = true
-        return this.optionsProducer()
-            .then(opts => {
-                let val = opts[0]
-                if(Array.isArray(val)) {
-                    let [options, selected] = opts as Array<any>
-                    this.options = options;
-                    this.selectOption(selected)
-                }else {
-                    this.options = opts as Array<any>;
-                    this.removeSelected();
+        this.isLoading = true;
+        return this.optionsProducer(this.filteredOptions.length, 30, this.searchText).then(
+            options => {
+                this.isLoading = false;
+                if(options.length > 0) {
+                    this.filteredOptions.push.apply(this.filteredOptions, options);
+                    this.calcPositions();
                 }
-                this.isLoaded = true;
-            })
-            .finally(() => this.isLoading = false)
+            }
+        )
     }
 
     protected updateMainSelected(): void{
@@ -125,8 +140,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     }
 
     public unselect(values: V[]): void{
-        let opts = this.options.filter(o => values.includes(o.value))
-        this.selectedOptions.removeValues(opts);
+        this.selectedOptions.removeBy(o => values.some(v => o.value.equals(v)));
         this.updateMainSelected();
     }
 
