@@ -21,7 +21,7 @@ let column: TableColumn<any>, entry: TableEntry;
         <div class="Table__entries">
             <entry v:component="${entry}" 
                 v:each="entry: ${this.entries}" 
-                v:classappend="${entry == this.selectedEntry? 'Table__entry_selected': ''}"></entry>
+                v:classappend="${this.isEntrySelected(entry)? 'Table__entry_selected': ''}"></entry>
         </div>
     </div>
 </div>
@@ -69,6 +69,10 @@ export default abstract class SelectableTable<T extends TableEntry> extends Tabl
      */
     protected handleEntryClick(entry: CapturedComponent): Promise<void>{
         return Promise.resolve();
+    }
+
+    isEntrySelected(entry: T): boolean{
+        return entry.equals(this.selectedEntry)
     }
 
     public removeSelectedEntry(): void{
