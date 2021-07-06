@@ -17,6 +17,10 @@ class DropdownOption<V> {
         this.text = text;
         this.withState = withState;
     }
+
+    equals(obj: any){
+        return obj instanceof DropdownOption && obj.value.equals(this.value)
+    }
 }
 export default DropdownOption;
 interface DropdownOption<V> extends Component{}

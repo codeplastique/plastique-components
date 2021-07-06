@@ -41,4 +41,9 @@ export default abstract class FilledTable<T extends TableEntry> extends Selectab
         this.allEntries.splice(pos, 0, entry);
         this.refreshEntries();
     }
+
+    protected removeEntry(entry: T): void {
+        this.allEntries.removeValue(entry);
+        this.refreshEntries();
+    }
 }

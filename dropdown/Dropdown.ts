@@ -240,7 +240,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     }
 
     protected isOptionSelected(option: DropdownOption<V>): boolean{
-        return this.selectedOption == option;
+        return this.selectedOption.equals(option);
     }
 
     public setSelected(value: V): void{

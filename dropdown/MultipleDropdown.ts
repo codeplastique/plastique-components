@@ -3,6 +3,7 @@ import InitEvent from "@plastique/core/event/InitEvent";
 import AppEvent from "@plastique/core/event/AppEvent";
 import Reactive from "@plastique/core/component/Reactive";
 import Dropdown from "./Dropdown";
+import DropdownOptionsProducer from "./DropdownOptionsProducer";
 
 @Reactive
 export default class MultipleDropdown<V> extends Dropdown<V>{
@@ -10,17 +11,52 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
 
     public readonly selectedOptions: DropdownOption<V>[];
 
+    public isLoaded: boolean;
+    private readonly optionsProducer: DropdownOptionsProducer<V>;
+
     constructor(
-        options: DropdownOption<V>[],
+        options: DropdownOption<V>[] | DropdownOptionsProducer<V>,
         selectedValues: V[],
         isSearchable?: boolean,
         isRequired?: boolean,
         isReverse?: boolean
     ) {
-        super(options, void 0, isSearchable, isRequired, false, isReverse)
+        super(Array.isArray(options)? options: [], void 0, isSearchable, isRequired, false, isReverse)
+        this.optionsProducer = Array.isArray(options)? null: options
         this.selectedOptions = [];
         selectedValues = selectedValues || [];
         this.select(selectedValues)
+    }
+
+
+    public openOptions() {
+        if(this.optionsProducer == null)
+            return super.openOptions();
+
+        if(this.isLoaded)
+            super.openOptions();
+        else
+            this.loadOptions().then(() => super.openOptions()).catch(() => {});
+    }
+
+    protected loadOptions(): Promise<void>{
+        if(this.isLoading)
+            return Promise.reject()
+        this.isLoading = true
+        return this.optionsProducer()
+            .then(opts => {
+                let val = opts[0]
+                if(Array.isArray(val)) {
+                    let [options, selected] = opts as Array<any>
+                    this.options = options;
+                    this.selectOption(selected)
+                }else {
+                    this.options = opts as Array<any>;
+                    this.removeSelected();
+                }
+                this.isLoaded = true;
+            })
+            .finally(() => this.isLoading = false)
     }
 
     protected updateMainSelected(): void{
@@ -32,7 +68,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     }
 
     protected isOptionSelected(option: DropdownOption<V>): boolean{
-        return this.selectedOptions.includes(option);
+        return this.selectedOptions.some(it => it.equals(option))
     }
 
     public getSelected(): DropdownOption<V>{
@@ -80,8 +116,8 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
     public select(values: V[]): void{
         let allOptions = this.options;
         for(let value of values){
-            let opt = allOptions.find(o => o.value == value)
-            if(opt == null)
+            let opt = allOptions.find(o => o.value.equals(value))
+            if(opt == null && this.optionsProducer == null)
                 throw new Error('Option is not found! Value: '+ value)
             this.selectedOptions.push(opt)
         }
