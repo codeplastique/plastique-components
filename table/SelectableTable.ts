@@ -42,7 +42,7 @@ export default abstract class SelectableTable<T extends TableEntry> extends Tabl
 
         if (targetComponent.is(TableColumn)) {
             let column = targetComponent.get<TableColumn<any>>();
-            if(column.isSorted)
+            if(column.isSortable)
                 this.setSortColumn(column);
 
         } else if (targetComponent.is(Type<TableEntry>())) {

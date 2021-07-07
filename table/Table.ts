@@ -39,7 +39,7 @@ abstract class Table<T extends TableEntry> {
         let targetComponent = event.getClosestComponent([TableColumn]);
         if (targetComponent.is(TableColumn)) {
             let column = targetComponent.get<TableColumn<any>>();
-            if(column.isSorted)
+            if(column.isSortable)
                 this.setSortColumn(column);
         }
     }

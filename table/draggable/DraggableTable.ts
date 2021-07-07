@@ -36,7 +36,7 @@ export default abstract class DraggableTable<T extends DraggableTableEntry> exte
         allEntries: T[],
         columns: TableColumn<TableColumnType>[],
         sortColumn?: TableColumnType | TableColumn<TableColumnType>,
-        isAscSort: boolean
+        isAscSort?: boolean
     ) {
         super(allEntries, columns, sortColumn, isAscSort);
     }
