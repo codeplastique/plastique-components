@@ -7,6 +7,11 @@ import BeforeDetach from "@plastique/core/component/BeforeDetach";
 import TableEntry from "./TableEntry";
 import BindThis from "@plastique/core/utils/BindThis";
 import Loader from "../loader/Loader";
+import TableColumnEnum from "./TableColumnEnum";
+
+declare global {
+    type TableColumnType = TableColumnEnum | string
+}
 
 @Reactive
 abstract class Table<T extends TableEntry> {
@@ -17,14 +22,17 @@ abstract class Table<T extends TableEntry> {
     protected readonly entries: T[] = []
     protected ignoreRefreshRequests: boolean;
     protected isAscSort: boolean;
+    private sortColumn: TableColumnType | null
 
     protected constructor(
-        protected readonly columns: TableColumn<any>[],
-        protected sortColumn?: TableColumn<any>,
+        protected readonly columns: TableColumn<TableColumnType>[],
+        sortColumn?: TableColumnType | TableColumn<TableColumnType>,
         isAscSort: boolean = true
     ) {
         this.loader = new Loader()
         this.isAscSort = isAscSort;
+        this.sortColumn = sortColumn instanceof TableColumn? sortColumn.type: sortColumn
+
     }
 
     protected onClickTable(event: Event): void {
@@ -81,11 +89,16 @@ abstract class Table<T extends TableEntry> {
             .finally(() => this.loader.setLoading(false));
     }
 
-    public setSortColumn(column: TableColumn<any>): void {
-        if(this.sortColumn == column)
+    isColumnSelected(column?: TableColumnType | TableColumn<TableColumnType>): boolean{
+        let type = column instanceof TableColumn? column.type: column as any
+        return type.equals(this.sortColumn)
+    }
+
+    public setSortColumn(column: TableColumnType | TableColumn<TableColumnType>): void {
+        if(this.isColumnSelected(column))
             this.isAscSort = !this.isAscSort;
         else{
-            this.sortColumn = column;
+            this.sortColumn = column instanceof TableColumn? column.type: column;
             this.isAscSort = true;
         }
         this.refreshEntries()
@@ -98,7 +111,7 @@ abstract class Table<T extends TableEntry> {
 
     public getSort(): TableSort{
         return this.sortColumn?
-            new TableSort(this.sortColumn.columnType, this.isAscSort ? 'ASC' : 'DESC')
+            new TableSort(this.sortColumn, this.isAscSort ? 'ASC' : 'DESC')
             :
             null;
     }

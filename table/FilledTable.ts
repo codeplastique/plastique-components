@@ -9,7 +9,12 @@ import TableColumnEnum from "./TableColumnEnum";
 @Reactive
 export default abstract class FilledTable<T extends TableEntry> extends SelectableTable<T>{
     protected readonly allEntries: T[];
-    protected constructor(allEntries: T[], columns: TableColumn<any>[], sortColumn: TableColumn<any>, isAscSort: boolean) {
+    protected constructor(
+        allEntries: T[],
+        columns: TableColumn<TableColumnType>[],
+        sortColumn?: TableColumnType | TableColumn<TableColumnType>,
+        isAscSort?: boolean
+    ) {
         super(columns, sortColumn, isAscSort);
         this.allEntries = allEntries;
     }

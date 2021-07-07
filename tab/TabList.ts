@@ -23,9 +23,9 @@ let entry: MapEntry<string, string>;
 class TabList {
     protected readonly keyToName: ReactiveReadonlyMap<string, string>;
     protected selected: string;
-    constructor(slotKeyToName: ReactiveReadonlyMap<string, string>, activeSlotName?: string) {
+    constructor(slotKeyToName: ReactiveReadonlyMap<string, string>, activeSlotKey?: string) {
         this.keyToName = slotKeyToName;
-        this.selected = activeSlotName;
+        this.selected = activeSlotKey;
     }
 
     public selectKey(slotKey: string): void{

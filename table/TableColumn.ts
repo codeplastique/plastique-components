@@ -5,19 +5,19 @@ import Reactive from "@plastique/core/component/Reactive";
 @Reactive(function (this: TableColumn<any>) {
 `<b xmlns:v="http://github.com/codeplastique/plastique" 
     class="Table__header"
-    v:classappend="${this.isSorted? 'Table__header_sort': ''}" 
+    v:classappend="${this.isSortable? 'Table__header_sort': ''}" 
     v:text="${this.name}">
 </b>
 `})
 class TableColumn<T extends TableColumnEnum | string>{
-    public readonly columnType: T;
+    public readonly type: T;
     public readonly name: string;
-    public readonly isSorted: boolean
+    public readonly isSortable: boolean
 
-    constructor(columnType: T, name: string, isSorted?: boolean) {
-        this.columnType = columnType;
+    constructor(type: T, name: string, isSortable?: boolean) {
+        this.type = type;
         this.name = name;
-        this.isSorted = isSorted;
+        this.isSortable = isSortable;
     }
 }
 export default TableColumn

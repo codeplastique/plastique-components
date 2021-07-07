@@ -16,7 +16,7 @@ let column: TableColumn<any>, entry: TableEntry;
             <header class="Table__headers">
                 <b v:component="${column}"  
                     v:each="column: ${this.columns}"
-                    v:classappend="${this.sortColumn == column ?
+                    v:classappend="${this.isColumnSelected(column) ?
                         (this.isAscSort ? 'Table__header_sort-asc': 'Table__header_sort-desc')
                         :
                         ''}">
@@ -34,8 +34,8 @@ let column: TableColumn<any>, entry: TableEntry;
 export default abstract class DraggableTable<T extends DraggableTableEntry> extends FilledTable<T>{
     protected constructor(
         allEntries: T[],
-        columns: TableColumn<any>[],
-        sortColumn: TableColumn<any>,
+        columns: TableColumn<TableColumnType>[],
+        sortColumn?: TableColumnType | TableColumn<TableColumnType>,
         isAscSort: boolean
     ) {
         super(allEntries, columns, sortColumn, isAscSort);

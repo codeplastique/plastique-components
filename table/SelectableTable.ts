@@ -12,7 +12,7 @@ let column: TableColumn<any>, entry: TableEntry;
         <header class="Table__headers">
             <b v:component="${column}"  
                 v:each="column: ${this.columns}"
-                v:classappend="${this.sortColumn == column ? 
+                v:classappend="${this.isColumnSelected(column) ? 
                     (this.isAscSort ? 'Table__header_sort-asc': 'Table__header_sort-desc')
                     : 
                     ''}">
@@ -30,9 +30,9 @@ export default abstract class SelectableTable<T extends TableEntry> extends Tabl
     protected selectedEntry: T;
 
     protected constructor(
-        columns: TableColumn<any>[],
-        sortColumn?: TableColumn<any>,
-        isAscSort: boolean = true
+        columns: TableColumn<TableColumnType>[],
+        sortColumn?: TableColumnType | TableColumn<TableColumnType>,
+        isAscSort?: boolean
     ) {
         super(columns, sortColumn, isAscSort);
     }
