@@ -43,7 +43,7 @@ export default class LazyDropdown<V> extends Dropdown<V>{
     }
 
     public static ofKnownSelected<V>(
-        optionsPromise: () => Promise<DropdownOption<V>[]>,
+        optionsPromise: () => Promise<ReadonlyArray<DropdownOption<V>>>,
         selectedValue?: V,
         isSearchable?: boolean,
         isRequired?: boolean,

@@ -2,13 +2,14 @@ import DropdownOption from "./DropdownOption";
 import Reactive from "@plastique/core/component/Reactive";
 import Lazy from "@plastique/core/utils/Lazy";
 import Dropdown from "./Dropdown";
+import DropdownOptionsGenerator from "./DropdownOptionsGenerator";
 
 @Reactive
 export default class DynamicDropdown<V> extends Dropdown<V>{
     private static readonly OPTIONS_COUNT = 30;
 
     constructor(
-        private optionProducer: ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>),
+        private optionProducer: DropdownOptionsGenerator<V>,
         selected?: V,
         isSearchable?: boolean,
         isRequired?: boolean,
@@ -17,7 +18,7 @@ export default class DynamicDropdown<V> extends Dropdown<V>{
         super([], selected, isSearchable, isRequired, isCustomOptionEnable);
     }
 
-    public setOptionProducer(value: (from: number, count: number, query: string) => Promise<DropdownOption<V>[]>) {
+    public setOptionProducer(value: DropdownOptionsGenerator<V>) {
         this.optionProducer = value;
     }
 

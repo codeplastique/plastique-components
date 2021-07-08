@@ -4,25 +4,24 @@ import AppEvent from "@plastique/core/event/AppEvent";
 import Reactive from "@plastique/core/component/Reactive";
 import Dropdown from "./Dropdown";
 import Lazy from "@plastique/core/utils/Lazy";
+import DropdownOptionsGenerator from "./DropdownOptionsGenerator";
 
 @Reactive
 export default class MultipleDropdown<V> extends Dropdown<V>{
     @InitEvent public static readonly REMOVE_OPTION_EVENT: AppEvent<DropdownOption<any>>
 
-    public readonly selectedOptions: DropdownOption<V>[];
-
-    public isLoaded: boolean;
-    private readonly optionsProducer: ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>);
+    private readonly selectedOptions: DropdownOption<V>[];
+    private readonly optionsProducer: DropdownOptionsGenerator<V>;
 
     constructor(
-        options: DropdownOption<V>[] | ((from: number, count: number, query: string) => Promise<DropdownOption<V>[]>),
-        selectedValues: V[],
+        options: ReadonlyArray<DropdownOption<V>> | DropdownOptionsGenerator<V>,
+        selectedValues: ReadonlyArray<V>,
         isSearchable?: boolean,
         isRequired?: boolean,
         isReverse?: boolean
     ) {
         super(Array.isArray(options)? options: [], void 0, isSearchable, isRequired, false, isReverse)
-        this.optionsProducer = Array.isArray(options)? null: options
+        this.optionsProducer = Array.isArray(options)? null: options as DropdownOptionsGenerator<V>
         this.selectedOptions = [];
         selectedValues = selectedValues || [];
         this.select(selectedValues)
@@ -94,7 +93,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         return this.selectedOptions;
     }
 
-    public getAllSelectedValues(): V[]{
+    public getAllSelectedValues(): ReadonlyArray<V>{
         return this.selectedOptions.map(it => it.value);
     }
 
@@ -128,7 +127,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         this.selectedOptions.clear();
     }
 
-    public select(values: V[]): void{
+    public select(values: ReadonlyArray<V>): void{
         let allOptions = this.options;
         for(let value of values){
             let opt = allOptions.find(o => o.value.equals(value))
@@ -139,7 +138,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         this.updateMainSelected()
     }
 
-    public unselect(values: V[]): void{
+    public unselect(values: ReadonlyArray<V>): void{
         this.selectedOptions.removeBy(o => values.some(v => o.value.equals(v)));
         this.updateMainSelected();
     }
@@ -148,7 +147,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         return this.getAllSelectedValues()
     }
 
-    public refreshOptions(options: DropdownOption<V>[], selectedValues?: V[]) {
+    public refreshOptions(options: ReadonlyArray<DropdownOption<V>>, selectedValues?: ReadonlyArray<V>) {
         this.options = options;
         selectedValues = selectedValues || this.selectedOptions.map(o => o.value)
         if(selectedValues.length > 0){

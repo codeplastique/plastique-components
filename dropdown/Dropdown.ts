@@ -13,6 +13,7 @@ import Focusable from "../state/Focusable";
 import Emptyable from "../state/Emptyable";
 import RequirableValidable from "../state/RequirableValidable";
 
+
 @Reactive(function(this: Dropdown<any>){
 let option: DropdownOption<any>, iter: TemplateIterator;
 let $event: MouseEvent;
@@ -90,7 +91,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     public disabled: boolean;
     protected isValueValid: boolean;
 
-    protected options: DropdownOption<V>[];
+    protected options: ReadonlyArray<DropdownOption<V>>;
     protected filteredOptions: DropdownOption<V>[];
     protected selectedOption: DropdownOption<V>;
 
@@ -103,7 +104,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     protected inputElement: HTMLInputElement;
 
     constructor(
-        options: DropdownOption<V>[],
+        options: ReadonlyArray<DropdownOption<V>>,
         selected?: V,
         isSearchable?: boolean,
         isRequired?: boolean,
@@ -157,7 +158,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         this.isFiltered = false;
         this.searchText = this.isSelfOptionEnable && this.isSelected()? this.selectedOption.text: '';
         this.pointer = -1;
-        this.filteredOptions = this.options;
+        this.filteredOptions = this.options.slice();
         this.calcPositions();
     }
 
@@ -312,14 +313,16 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
         return this.options;
     }
 
-    public refreshOptions(options: DropdownOption<V>[]): void{
+    public refreshOptions(options: ReadonlyArray<DropdownOption<V>>): void{
         this.options = options;
         if(this.selectedOption)
             this.setSelected(this.selectedOption.value)
     }
 
     public addOption(newOption: DropdownOption<V>): void{
-        this.options.push(newOption)
+        let opts = this.options.slice()
+        opts.push(newOption)
+        this.options = opts
     }
 
 }

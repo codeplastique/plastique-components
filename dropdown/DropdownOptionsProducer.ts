@@ -5,5 +5,5 @@ export default interface DropdownOptionsProducer<V>{
      * @return Promise of [options, selectedOption], selectedOption is optional
      * or Promise of options only
      */
-    () : Promise<([DropdownOption<V>[],  DropdownOption<V>?]) | DropdownOption<V>[]>
+    () : Promise<([ReadonlyArray<DropdownOption<V>>,  DropdownOption<V>?]) | ReadonlyArray<DropdownOption<V>>>
 }
