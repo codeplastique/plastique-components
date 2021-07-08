@@ -4,7 +4,7 @@ export default class Confirm<T>{
     protected readonly promise: Promise<T>
     protected readonly resolvePromise: Promise<T>
 
-    constructor(resolveAction?: () => Promise<any>) {
+    constructor(resolveAction?: (arg?: T) => Promise<any>) {
         this.promise = new Promise((res, rej) => {
             ///@ts-ignore
             this.resolve = res;
@@ -20,7 +20,7 @@ export default class Confirm<T>{
                 reject = rej;
             })
             this.promise.then(
-                () => resolveAction().then(resolve, reject),
+                (arg?: T) => resolveAction(arg).then(resolve, reject),
                 () => reject()
             )
         }
