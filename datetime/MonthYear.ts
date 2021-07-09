@@ -2,38 +2,39 @@ import Comparable from "../state/Comparable";
 
 export default class MonthYear implements Comparable<MonthYear>{
 
+    readonly month: number
+    readonly year: number
     /**
      * @param month from 0 to 11
      * @param year format 'yyyy'
      */
-    constructor(
-        public month?: number,
-        public year?: number
-    ) {
-        if(this.month == null || this.year == null){
-            let current = new Date();
-            this.month = current.getMonth();
-            this.year = current.getFullYear();
+    constructor()
+    constructor(date: Date)
+    constructor(month: number, year: number)
+    constructor(month?: number | Date, year?: number) {
+        if(month == null || month instanceof Date){
+            let date = month == null? new Date(): month as Date
+            this.month = date.getMonth();
+            this.year = date.getFullYear();
+        }else {
+            this.month = month
+            this.year = year
         }
     }
 
-    public static fromDate(date: Date): MonthYear{
-        return new MonthYear(date.getMonth(), date.getFullYear())
-    }
-
-    public hasDate(date: Date): boolean{
+    hasDate(date: Date): boolean{
         return date.getMonth() == this.month && date.getFullYear() == this.year;
     }
 
-    public isBefore(monthYear: MonthYear): boolean{
+    isBefore(monthYear: MonthYear): boolean{
         return this.year < monthYear.year || (this.year == monthYear.year && this.month < monthYear.month);
     }
 
-    public toDate(date: number): Date{
+    toDate(date: number): Date{
         return new Date(this.year, this.month, date);
     }
 
-    public equals(monthYear: MonthYear): boolean{
+    equals(monthYear: MonthYear): boolean{
         return this.month == monthYear.month && this.year == monthYear.year;
     }
 
@@ -43,11 +44,11 @@ export default class MonthYear implements Comparable<MonthYear>{
      *          1 if this MonthYear more then arg,
      * @param monthYear
      */
-    public compare(monthYear: MonthYear): number{
+    compare(monthYear: MonthYear): number{
         return this.equals(monthYear)? 0: (this.isBefore(monthYear)? -1: 1)
     }
 
-    public getNextMonth(): MonthYear{
+    getNextMonth(): MonthYear{
         let month = this.month
         let year = this.year
         return new MonthYear(
@@ -55,7 +56,7 @@ export default class MonthYear implements Comparable<MonthYear>{
             month == 11? year + 1: year)
     }
 
-    public getPrevMonth(): MonthYear{
+    getPrevMonth(): MonthYear{
         let month = this.month
         let year = this.year
         return new MonthYear(
@@ -63,11 +64,11 @@ export default class MonthYear implements Comparable<MonthYear>{
             month == 0? year - 1: year)
     }
 
-    public getDaysCount(): number {
+    getDaysCount(): number {
         return new Date(this.year, this.month + 1, 0).getDate()
     }
 
-    public copyToDate(date: Date): Date{
+    copyToDate(date: Date): Date{
         date.setFullYear(this.year, this.month);
         return date;
     }
