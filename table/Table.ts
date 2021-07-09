@@ -8,6 +8,8 @@ import TableEntry from "./TableEntry";
 import BindThis from "@plastique/core/utils/BindThis";
 import Loader from "../loader/Loader";
 import TableColumnEnum from "./TableColumnEnum";
+import Notifier from "../notifier/Notifier";
+import I18n from "@plastique/core/utils/I18n";
 
 declare global {
     type TableColumnType = TableColumnEnum | string
@@ -69,6 +71,25 @@ abstract class Table<T extends TableEntry> {
         }
     };
 
+    protected appendEntries(from: number, count: number): Promise<T[]>{
+        let allEntries = this.entries;
+        if (from == 0)
+            allEntries.clear();
+
+        let sorting = this.getSort();
+        return this.requestEntries(from, count, sorting)
+            .then(entries => {
+                if(from > 0 && entries.some(it => allEntries.has(it))){
+                    Notifier.info(I18n.text('table_refresh'))
+                    return this.appendEntries(0, Table.BATCH_SIZE)
+                }
+
+                allEntries.push(...entries);
+                return entries;
+            })
+    }
+
+
     /**
      * @return new loaded entries
      */
@@ -77,15 +98,7 @@ abstract class Table<T extends TableEntry> {
             return Promise.reject();
 
         this.loader.setLoading(true);
-        if (from == 0)
-            this.entries.clear();
-
-        let sorting = this.getSort();
-        return this.requestEntries(from, count, sorting)
-            .then(entries => {
-                this.entries.push(...entries);
-                return entries;
-            })
+        return this.appendEntries(from, count)
             .finally(() => this.loader.setLoading(false));
     }
 
