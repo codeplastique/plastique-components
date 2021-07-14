@@ -1,0 +1,109 @@
+Plastique-Filter-list($activeColor = #407af3, $width = 15rem) {
+  $name = '.Filter-list'
+
+  .Filter-list {
+    $padding = 1.25rem
+    $headerLineHeight = 2rem;
+    $headerMarginBottom = 1.2rem
+    $width = 15rem
+
+    width $width
+    padding $padding 0
+    background rgb(244, 244, 244)
+    overflow hidden
+
+    &__header {
+      margin 0 $padding $headerMarginBottom
+      font-weight bold
+      font-size 1.25rem
+      line-height $headerLineHeight
+      display flex;
+    }
+
+    &__scrolling {
+      overflow auto
+      height "calc(100% - %s)" % ($headerMarginBottom + $headerLineHeight)
+      width ($width + 2rem) //2rem is scroll bar
+      overscroll-behavior contain
+    }
+
+    &__filters {
+      width $width
+      padding 0 $padding
+      margin-top -0.1rem
+    }
+
+    &__help-icon {
+      font-size 1rem
+      line-height inherit
+      margin-left .5rem
+      color #939393
+
+      &:hover {
+        color #407af3
+
+        + {$name}__help-info {
+          visibility visible
+          opacity 1
+          margin-top 0
+          transition-delay 0.2s
+        }
+      }
+    }
+
+    &__help-info {
+      opacity 0
+      visibility hidden
+      z-index 90
+      position absolute
+      left .5rem
+      right .5rem
+      margin-top 1rem
+      transition-duration .15s
+      transition-delay 0s
+      padding-left 1.6rem !important
+    }
+
+    &__clear-btn {
+      color #a2a2a2
+      cursor pointer
+      display none
+      font-size 1rem
+      line-height inherit
+      margin-left auto
+
+      &:hover {
+        color $activeColor
+      }
+    }
+
+    &_filled {
+      {$name} {
+        &__header {
+          color $activeColor
+        }
+
+        &__clear-btn {
+          display block
+        }
+      }
+    }
+
+
+    &__label {
+      cursor pointer
+      font-weight bold
+      margin-top .5rem
+      display block
+    }
+
+    &__toggle-icon {
+      transition-duration .2s
+
+      &_active {
+        transform: rotate(90deg);
+      }
+    }
+
+  }
+}

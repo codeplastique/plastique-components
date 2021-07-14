@@ -1,0 +1,135 @@
+Plastique-Filter($height = 1.5rem, $inactiveIconColor = #b5b5b5) {
+
+  .Filter {
+    $name = '.Filter'
+    $spaceTopFilled = 1.2rem
+    $inputPaddingTop = .3rem
+    $activeColor = #407af3
+    $boxShadow = 0 0.0625rem 0 0 #7d7d7d
+
+    cursor pointer
+    position relative
+    transition-duration .2s
+    margin-top .1rem
+    line-height $height
+    transition-property padding-top
+
+    &:hover {
+      color $activeColor
+    }
+
+    &_filled {
+      cursor auto
+      padding-top $spaceTopFilled
+      padding-bottom .4rem
+
+      {$name}__name {
+        font-size 80%
+        font-weight bold
+        color $activeColor
+      }
+
+      {$name}__remove-btn {
+        display block
+      }
+
+      {$name}__input {
+        cursor text
+
+        &:focus {
+          outline 0
+          box-shadow: $boxShadow
+        }
+      }
+    }
+
+    &__name {
+      position absolute
+      top 0
+    }
+
+
+    &__input {
+      position relative
+      background: transparent;
+      border 0
+      cursor pointer
+      padding: $inputPaddingTop 2rem 0.1rem 0;
+      width 100%
+
+      &_invalid {
+        box-shadow: 0 0.0625rem 0 0 red !important
+        color: red;
+      }
+    }
+
+    &__remove-btn {
+      display none
+      position absolute
+      top 0
+      margin-top ($spaceTopFilled + $inputPaddingTop)
+      line-height inherit;
+      right 0.125rem
+      color $inactiveIconColor
+      cursor pointer
+
+      &:hover {
+        color $activeColor
+      }
+    }
+
+  }
+
+
+  .Dropdown {
+    $name = '.Dropdown'
+
+    &_filter {
+      background transparent
+      min-height: $height
+      cursor pointer
+      color #212529;
+
+      {$name}__search:focus {
+        box-shadow $boxShadow !important
+        cursor auto !important
+      }
+
+      {$name} {
+        &__text {
+          line-height: 1.5;
+          padding: 0.3rem .5rem 0.1rem 0;
+        }
+
+        &__icon {
+          display none
+        }
+
+        &__search {
+          border: 0;
+          padding: 0.3rem 2rem 0.1rem 0;
+          cursor pointer
+          border-radius 0
+
+          &:focus {
+            box-shadow: none
+          }
+        }
+
+        &__close-btn {
+          font-size: 1rem;
+          right: 0.125rem;
+          padding-right: 0;
+          line-height: 1.93rem;
+          color: $inactiveIconColor
+
+          &:hover {
+            color $inactiveIconColor
+          }
+        }
+
+      }
+    }
+  }
+
+}

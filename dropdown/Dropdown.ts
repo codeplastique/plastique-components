@@ -15,7 +15,8 @@ import RequirableValidable from "../state/RequirableValidable";
 
 
 @Reactive(function(this: Dropdown<any>){
-let option: DropdownOption<any>, iter: TemplateIterator;
+let option: DropdownOption<any>;
+let iter: TemplateIterator;
 let $event: MouseEvent;
 
 `<div class="Dropdown" xmlns:v="http://github.com/codeplastique/plastique"
