@@ -46,7 +46,7 @@ abstract class Table<T extends TableEntry> {
     protected static BOTTOM_SCROLL_OFFSET = 300; //px
     protected static BATCH_SIZE = 70;
 
-    public readonly loader: Loader;
+    readonly loader: Loader;
     protected readonly entries: T[] = []
     protected ignoreRefreshRequests: boolean;
     protected isAscSort: boolean;
@@ -133,7 +133,7 @@ abstract class Table<T extends TableEntry> {
         return type.equals(this.sortColumn)
     }
 
-    public setSortColumn(column: TableColumnType | TableColumn<TableColumnType>): void {
+    setSortColumn(column: TableColumnType | TableColumn<TableColumnType>): void {
         if(this.isColumnSelected(column))
             this.isAscSort = !this.isAscSort;
         else{
@@ -143,12 +143,12 @@ abstract class Table<T extends TableEntry> {
         this.refreshEntries()
     }
 
-    public refreshEntries(): Promise<any> {
+    refreshEntries(): Promise<any> {
         this.ignoreRefreshRequests = false;
         return this.loadEntries(0, Table.BATCH_SIZE);
     }
 
-    public getSort(): Sort{
+    getSort(): Sort{
         return this.sortColumn?
             new Sort(this.sortColumn, this.isAscSort ? 'ASC' : 'DESC')
             :

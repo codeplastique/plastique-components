@@ -16,7 +16,10 @@ import ValidableNumber from "../field/ValidableNumber";
 
 @Reactive(function (this: FilterSet<any>) {
 let filter: Filter<any>;
-`<div xmlns:v="http://github.com/codeplastique/plastique" class="Filter-list" v:classappend="${this.filled? 'Filter-list_filled': ''}">
+`<div xmlns:v="http://github.com/codeplastique/plastique" 
+    class="Filter-list" 
+    v:classappend="${this.filled? 'Filter-list_filled': ''}">
+    
     <header class="Filter-list__header">
         <span v:text="#{filters}"></span>
         <i class="fas fa-ban Filter-list__clear-btn" v:onclick="${this.clearAll}"></i>
@@ -29,12 +32,13 @@ let filter: Filter<any>;
 </div>
 `})
 
-abstract class FilterSet<T> {
+class FilterSet<T> {
     @InitEvent public static readonly CHANGE_EVENT: AppEvent<FilterSet<any>>
-    protected readonly filters: Filter<T>[];
+    readonly filters: Filter<T>[];
     protected filled: boolean
+    private lastModifier: number
 
-    protected constructor(filters: Filter<T>[] = []) {
+    constructor(filters: Filter<T>[] = []) {
         this.filters = filters;
         this.filled = filters.some(it => it.isFilled())
     }
@@ -43,6 +47,7 @@ abstract class FilterSet<T> {
     protected onChange(val: any, filter: Filter<T>): void{
         if(this.filled != filter.isFilled())
             this.filled = this.filters.find(f => f.isFilled()) != null;
+        this.lastModifier = Date.now()
         this.fireEventOnParents(FilterSet.CHANGE_EVENT, this);
     }
 
@@ -113,6 +118,9 @@ abstract class FilterSet<T> {
         return (object, value) => value == null || object[prop] == value.value
     }
 
+    hashCode(): string{
+        return String(this.lastModifier)
+    }
 }
 
 export default FilterSet

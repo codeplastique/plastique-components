@@ -1,0 +1,16 @@
+Plastique-Filterable-table($filterWidth = 15rem) {
+  .Filterable-table {
+    $name = '.Filterable-table'
+    display flex
+
+    &__table{
+      width: 'calc(100% - %s)' % $filterWidth
+    }
+
+    &__filter{
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+  }
+}

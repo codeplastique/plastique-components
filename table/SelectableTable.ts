@@ -8,7 +8,7 @@ import Table from "./Table";
 @Reactive(function (this: SelectableTable<any>) {
 let column: TableColumn<any>, entry: TableEntry;
 `<div xmlns:v="http://github.com/codeplastique/plastique" class="Table Table_clickable">
-    <div v:onclick="${this.onClickTable}" >
+    <div v:onclick="${this.onClickTable}">
         <header class="Table__headers">
             <b v:component="${column}"  
                 v:each="column: ${this.columns}"
@@ -75,11 +75,11 @@ export default abstract class SelectableTable<T extends TableEntry> extends Tabl
         return entry.equals(this.selectedEntry)
     }
 
-    public removeSelectedEntry(): void{
+    removeSelectedEntry(): void{
         this.selectedEntry = null;
     }
 
-    public getSelectedEntry(): TableEntry{
+    getSelectedEntry(): TableEntry{
         return this.selectedEntry;
     }
 }
