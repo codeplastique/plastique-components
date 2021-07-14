@@ -19,6 +19,8 @@ class TableColumn<T extends TableColumnEnum | string>{
         this.name = name;
         this.isSortable = isSortable;
     }
+
+    public static readonly EMPTY = new TableColumn(null, '')
 }
 export default TableColumn
 interface TableColumn<T> extends Component{}

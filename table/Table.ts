@@ -1,7 +1,6 @@
 import Reactive from "@plastique/core/component/Reactive";
 import Component from "@plastique/core/component/Component";
 import TableColumn from "./TableColumn";
-import TableSort from "./TableSort";
 import AfterAttach from "@plastique/core/component/AfterAttach";
 import BeforeDetach from "@plastique/core/component/BeforeDetach";
 import TableEntry from "./TableEntry";
@@ -10,12 +9,39 @@ import Loader from "../loader/Loader";
 import TableColumnEnum from "./TableColumnEnum";
 import Notifier from "../notifier/Notifier";
 import I18n from "@plastique/core/utils/I18n";
+import Sort from "../request/Sort";
 
 declare global {
     type TableColumnType = TableColumnEnum | string
 }
 
-@Reactive
+/**
+ * block modifiers:
+ * Table_clickable - add hover
+ *
+ * @see Table.styl
+ */
+@Reactive(function (this: Table<any>) {
+let column: TableColumn<any>, entry: TableEntry;
+`<div xmlns:v="http://github.com/codeplastique/plastique" class="Table">
+    <div v:onclick="${this.onClickTable}" >
+        <header class="Table__headers">
+            <b v:component="${column}"  
+                v:each="column: ${this.columns}"
+                v:classappend="${this.isColumnSelected(column) ?
+                (this.isAscSort ? 'Table__header_sort-asc': 'Table__header_sort-desc')
+                :
+                ''}">
+            </b>
+        </header>
+        <div class="Table__entries">
+            <entry v:component="${entry}" 
+                v:each="entry: ${this.entries}" 
+                v:classappend="'Table__entry'"></entry>
+        </div>
+    </div>
+</div>
+`})
 abstract class Table<T extends TableEntry> {
     protected static BOTTOM_SCROLL_OFFSET = 300; //px
     protected static BATCH_SIZE = 70;
@@ -46,7 +72,7 @@ abstract class Table<T extends TableEntry> {
         }
     }
 
-    protected abstract requestEntries(from: number, count: number, sorting?: TableSort): Promise<T[]>
+    protected abstract requestEntries(from: number, count: number, sorting?: Sort): Promise<T[]>
 
     @AfterAttach
     protected init(): void {
@@ -122,9 +148,9 @@ abstract class Table<T extends TableEntry> {
         return this.loadEntries(0, Table.BATCH_SIZE);
     }
 
-    public getSort(): TableSort{
+    public getSort(): Sort{
         return this.sortColumn?
-            new TableSort(this.sortColumn, this.isAscSort ? 'ASC' : 'DESC')
+            new Sort(this.sortColumn, this.isAscSort ? 'ASC' : 'DESC')
             :
             null;
     }

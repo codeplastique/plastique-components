@@ -1,10 +1,10 @@
 import SelectableTable from "./SelectableTable";
 import TableEntry from "./TableEntry";
 import Reactive from "@plastique/core/component/Reactive";
-import TableSort from "./TableSort";
 import Table from "./Table";
 import TableColumn from "./TableColumn";
 import TableColumnEnum from "./TableColumnEnum";
+import Sort from "../request/Sort";
 
 @Reactive
 export default abstract class FilledTable<T extends TableEntry> extends SelectableTable<T>{
@@ -19,12 +19,12 @@ export default abstract class FilledTable<T extends TableEntry> extends Selectab
         this.allEntries = allEntries;
     }
 
-    protected requestEntries(from: number, count: number, sorting?: TableSort): Promise<T[]> {
+    protected requestEntries(from: number, count: number, sorting?: Sort): Promise<T[]> {
         let subList = this.allEntries;
         if(sorting){
             subList = subList.slice();
-            this.sortEntries(subList, sorting.field);
-            if(sorting.direction == "DESC")
+            this.sortEntries(subList, sorting.sortField);
+            if(sorting.sortDirection == "DESC")
                 subList = subList.reverse()
         }
         subList = subList.slice(from, from + Table.BATCH_SIZE);

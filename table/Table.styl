@@ -1,10 +1,8 @@
-Plastique-Table($iconFontFamily, $offset, $headerHeight) {
-  Offset_typeOf($offset);
+Plastique-Table() {
+  $name = '.Table'
+  $ICON_FONT_FAMILY = 'Font Awesome 5 Free';
 
   .Table {
-    $name = '.Table'
-    $padding = 1.25rem;
-
     &_clickable{
       {$name}__entry{
         cursor pointer
@@ -18,12 +16,10 @@ Plastique-Table($iconFontFamily, $offset, $headerHeight) {
       background white
       z-index 2
       display flex
-      padding-top: $padding
-      top: $offset.top;
     }
 
     &__header {
-      line-height: $headerHeight !important;
+      line-height: 2.375rem !important;
       padding-top 0 !important
       padding-bottom 0 !important
       white-space nowrap
@@ -44,7 +40,7 @@ Plastique-Table($iconFontFamily, $offset, $headerHeight) {
         &:after {
           position absolute;
           opacity .2;
-          font-family $iconFontFamily;
+          font-family $ICON_FONT_FAMILY;
           right .8rem;
           font-size 1rem;
           color black;
@@ -84,18 +80,6 @@ Plastique-Table($iconFontFamily, $offset, $headerHeight) {
     &__entries {
       position relative;
       width 100%
-
-      &_no-edit {
-        {$name} {
-          &__menu-btn {
-            display none
-          }
-
-          &__order-message {
-            display none !important
-          }
-        }
-      }
     }
 
     &__entry {
