@@ -8,9 +8,12 @@
       "esnext"
     ],
     "removeComments": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "jsx": "react-native"
   },
   "include": [
-    "node_modules/@plastique/**/*"
+    "node_modules/@plastique/**/*",
+    "node_modules/@vue/**/*",
+    "**/*"
   ]
 }

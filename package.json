@@ -5,7 +5,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "devDependencies": {
+    "@vue/test-utils": "^1.2.1",
+    "file-loader": "~6.2.0",
+    "ts-loader": "6.1.0",
+    "typescript": "3.2.4",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
+    "webpack-shell-plugin": "^0.5.0",
+    "@plastique/core": "^1.6.24",
+    "jsdom-global": "^3.0.2"
+  },
   "dependencies": {
+    "jsdom-global": "^3.0.2",
+    "@vue/test-utils": "^1.2.1",
     "@plastique/core": "^1.6.24",
     "perfect-scrollbar": "1.5.0",
     "typescript": "3.2"
