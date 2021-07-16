@@ -1,5 +1,4 @@
 import Reactive from "@plastique/core/component/Reactive";
-import Table from "./Table";
 import FilterSet from "../filter/FilterSet";
 import Listener from "@plastique/core/event/Listener";
 import Lazy from "@plastique/core/utils/Lazy";
@@ -14,7 +13,7 @@ import Filterable from "../state/Filterable";
 `})
 class FilterableTable{
     constructor(
-        readonly table: Table<any> & Filterable
+        readonly table: Filterable
     ) {}
 
     @Listener(FilterSet.CHANGE_EVENT)
@@ -24,4 +23,4 @@ class FilterableTable{
     }
 }
 export default FilterableTable
-interface FilterTable extends Component{}
+interface FilterableTable extends Component{}
