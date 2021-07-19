@@ -1,0 +1,29 @@
+Plastique-Text-menu-btn() {
+  .Text-menu-btn {
+    $name = '.Text-menu-btn'
+
+    position: relative
+    &__menu{
+      position: absolute;
+      top: 0;
+      left: 100%;
+      text-align: left;
+      z-index 100 !important
+      animation: .2s ease 0s 1 normal forwards running anim0;
+
+
+      +animate("raise", .2s) {
+        from {
+            opacity: 0
+            bottom: calc(100% + 1.5rem)
+          }
+        to {
+            opacity: 1
+            bottom: 100%
+          }
+      }
+
+
+    }
+  }
+}

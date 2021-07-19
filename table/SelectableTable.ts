@@ -21,7 +21,7 @@ let column: TableColumn<any>, entry: TableEntry;
         <div class="Table__entries">
             <entry v:component="${entry}" 
                 v:each="entry: ${this.entries}" 
-                v:classappend="'Table__entry' + ${this.isEntrySelected(entry)? 'Table__entry_selected': ''}"></entry>
+                v:classappend="'Table__entry' + ${this.isEntrySelected(entry)? ' Table__entry_selected': ''}"></entry>
         </div>
     </div>
 </div>

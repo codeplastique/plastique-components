@@ -1,0 +1,37 @@
+Plastique-Text-menu() {
+  .Text-menu {
+    $name = '.Text-menu'
+
+    background: #fff;
+    box-shadow: 0 0.2rem 2.5rem -0.1rem rgba(0, 0, 0, 0.28);
+    padding: 0.3rem 0;
+    border-radius: 0.5rem;
+    z-index 1
+    text-align left
+    line-height: 2rem;
+    font-size: 1rem;
+
+    &__btn {
+      font-size: 90%;
+      cursor pointer
+      padding: 0 .7rem;
+      white-space nowrap
+
+      &:hover {
+          background: rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    &__actions {
+      display flex
+    }
+
+    &__action {
+      width 50%
+
+      + {$name}__action {
+          margin-left .5rem
+      }
+    }
+  }
+}

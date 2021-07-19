@@ -13,6 +13,8 @@
 @import "utils/Required-label.styl"
 @import "filter/Filter-list.styl"
 @import "filter/Filter.styl"
+@import "textmenu/Text-menu.styl"
+@import "textmenu/Text-menu-btn.styl"
 
 
 Offset_create($top = 0, $right = 0, $bottom = 0, $left = 0){
@@ -24,17 +26,22 @@ Offset_typeOf($offset){
   }
 }
 
-_$animationCount = 0;
-animate($duration = 0s, $timingFunction = ease, $delay = 0s, $iterationCount = 1, $direction = normal, $fillMode = forwards, $playState = running){
+animate($animationName = null, $duration = 0s, $timingFunction = ease, $delay = 0s, $iterationCount = 1, $direction = normal, $fillMode = forwards, $playState = running){
   vendors = official;
 
-  $animationName = 'anim'+ _$animationCount
+  if $animationName == null {
+    $animationCount = lookup('$_animationCount')
+    if $animationCount == null {
+      $animationCount = 0;
+    }
+    $animationName = 'anim' + $animationCount
+    define('$_animationCount', $animationCount + 1, true)
+  }
   animation: $duration $timingFunction $delay $iterationCount $direction $fillMode $playState unquote($animationName);
   @keyframes {$animationName}{
     {block}
   }
 
-  _$animationCount = _$animationCount + 1;
 }
 
 rem($value) {
