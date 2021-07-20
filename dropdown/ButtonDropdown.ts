@@ -16,15 +16,12 @@ import App from "@plastique/core/base/App";
 `})
 class ButtonDropdown<D extends Dropdown<any>> implements Jsonable{
     constructor(
-        public dropdown: D,
-        protected text?: string,
-        public openAction?: Function
+        readonly dropdown: D,
+        protected readonly text?: string
     ) {}
 
     protected open(): void{
-        if(this.openAction)
-            this.openAction();
-        this.dropdown.isActive = true;
+        this.dropdown.openOptions();
         App.nextTick(() => this.dropdown.focus());
     }
 
