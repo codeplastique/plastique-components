@@ -14,7 +14,7 @@ class TextMenuItem {
         this.action = action;
     }
 
-    public run(): void{
+    run(): void{
         this.action();
     }
 }

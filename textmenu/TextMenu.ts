@@ -4,9 +4,11 @@ import TextMenuItem from "./TextMenuItem";
 import AfterAttach from "@plastique/core/component/AfterAttach";
 import AppEvent from "@plastique/core/event/AppEvent";
 import InitEvent from "@plastique/core/event/InitEvent";
-import SimpleMap from "@plastique/core/collection/map/SimpleMap";
 import EventRegister from "../utils/EventRegister";
 import Page from "../utils/Page";
+import ReactiveReadonlyMap from "@plastique/core/collection/map/ReactiveReadonlyMap";
+import Types from "@plastique/core/base/Types";
+import Type from "@plastique/core/base/Type";
 
 @Reactive(function(this: TextMenu){
 let item: TextMenuItem
@@ -16,11 +18,11 @@ let item: TextMenuItem
 `})
 class TextMenu {
     @InitEvent public static readonly CLOSE_EVENT: AppEvent<TextMenu>
-    protected readonly items: TextMenuItem[];
+    protected readonly items: ReadonlyArray<TextMenuItem>;
     protected closeEventRegister: EventRegister
 
-    constructor(arg: TextMenuItem[] | SimpleMap<string, Function>) {
-        if(arg instanceof SimpleMap){
+    constructor(arg: ReadonlyArray<TextMenuItem> | ReactiveReadonlyMap<string, Function>) {
+        if(Types.is(arg, Type<ReactiveReadonlyMap<any, any>>())){
             this.items = arg.map((k, v) => new TextMenuItem(k, v));
         }else
             this.items = arg;
