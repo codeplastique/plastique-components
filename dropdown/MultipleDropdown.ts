@@ -8,6 +8,7 @@ import DropdownOptionsGenerator from "./DropdownOptionsGenerator";
 
 @Reactive
 export default class MultipleDropdown<V> extends Dropdown<V>{
+    private static readonly COUNT = 25
     @InitEvent public static readonly REMOVE_OPTION_EVENT: AppEvent<DropdownOption<any>[]>
 
     private readonly selectedOptions: DropdownOption<V>[];
@@ -34,13 +35,14 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         super.openOptions();
 
         if(this.optionsProducer != null) {
+            let from = 0
             this.filteredOptions = this.selectedOptions.slice()
-            this.loadOptions().then(() => {
+            this.loadOptions(from).then(() => {
                 if (this.menuElement)
                     this.menuElement.addEventListener('scroll', () => {
                         let bottomOfMenu = this.menuElement.scrollTop + this.menuElement.clientHeight >= (this.menuElement.scrollHeight);
                         if (bottomOfMenu)
-                            this.loadOptions();
+                            this.loadOptions(from += MultipleDropdown.COUNT);
                     })
             });
         }else {
@@ -64,21 +66,19 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         this.filteredOptions = [];
         if(this.options.length > 0){
             let searchText = this.searchText.toLowerCase();
-            this.filteredOptions = this.options.filter(o => o.text.toLowerCase().indexOf(searchText) >= 0);
-            // this.pointer = this.filteredOptions.length > 0? 0: -1;
+            this.filteredOptions = this.selectedOptions.filter(o => o.text.toLowerCase().includes(searchText));
         }
-        this.loadOptions().then(() => {
+        this.loadOptions(0).then(() => {
             this.pointer = this.filteredOptions.length > 0? 0: -1;
         });
     }
 
-    protected loadOptions(): Promise<void>{
+    protected loadOptions(from: number): Promise<void>{
         if(this.isLoading)
             return Promise.resolve();
 
         this.isLoading = true;
-        let count = 20 + this.options.length //options.length is already selected
-        return this.optionsProducer(this.filteredOptions.length, count, this.searchText).then(
+        return this.optionsProducer(from, MultipleDropdown.COUNT, this.searchText.toLowerCase()).then(
             options => {
                 options.removeValues(this.selectedOptions)
                 if(options.length > 0) {
