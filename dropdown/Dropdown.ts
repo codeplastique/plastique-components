@@ -92,7 +92,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     public disabled: boolean;
     protected isValueValid: boolean;
 
-    protected options: ReadonlyArray<DropdownOption<V>>;
+    protected options: DropdownOption<V>[];
     protected filteredOptions: DropdownOption<V>[];
     protected selectedOption: DropdownOption<V>;
 
@@ -114,7 +114,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     ) {
         this.filteredOptions = [];
         this.isRequired = isRequired;
-        this.options = options;
+        this.options = options.slice();
         if(selected !== void 0)
             this.setSelected(selected)
         else
@@ -300,7 +300,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     }
 
     public hasOptionValue(value: V): boolean{
-        return this.options.find(o => o.value == value) != null
+        return this.options.some(o => o.value.equals(value))
     }
 
     public isDisabled(): boolean {
@@ -315,15 +315,13 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
     }
 
     public refreshOptions(options: ReadonlyArray<DropdownOption<V>>): void{
-        this.options = options;
+        this.options = options.slice();
         if(this.selectedOption)
             this.setSelected(this.selectedOption.value)
     }
 
     public addOption(newOption: DropdownOption<V>): void{
-        let opts = this.options.slice()
-        opts.push(newOption)
-        this.options = opts
+        this.options.push(newOption)
     }
 
 }

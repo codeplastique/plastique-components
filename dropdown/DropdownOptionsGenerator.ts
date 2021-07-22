@@ -2,5 +2,5 @@ import DropdownOption from "./DropdownOption";
 
 export default interface DropdownOptionsGenerator<V>{
 
-    (from: number, count: number, query: string): Promise<ReadonlyArray<DropdownOption<V>>>
+    (from: number, count: number, query?: string): Promise<DropdownOption<V>[]>
 }
