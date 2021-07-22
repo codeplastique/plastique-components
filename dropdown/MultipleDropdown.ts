@@ -165,7 +165,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         if(Array.isArray(values))
             optsForRemove = this.selectedOptions.filter(o => values.some(v => o.value.equals(v)));
         else
-            optsForRemove = this.selectedOptions.filter(o => o.value.equals(values));
+            optsForRemove = [this.selectedOptions.find(o => o.value.equals(values))];
         this.selectedOptions.removeValues(optsForRemove)
         if(this.optionsProducer != null) {
             this.options.removeValues(optsForRemove)
