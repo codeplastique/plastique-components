@@ -5,8 +5,8 @@ import Sort from "./Sort";
 export default class FilterRequest<F> extends EntriesRequest{
     @ToJson readonly filter: F;
 
-    constructor(from?: number, count?: number, filter?: F, sort?: Sort){
-        super(from, count, sort)
+    constructor(from?: number, limit?: number, filter?: F, sort?: Sort){
+        super(from, limit, sort)
         this.filter = filter;
     }
 }

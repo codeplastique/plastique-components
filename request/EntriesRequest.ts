@@ -4,12 +4,12 @@ import JsonMerge from "@plastique/core/hash/JsonMerge";
 
 export default class EntriesRequest {
     @ToJson readonly from: number;
-    @ToJson readonly count: number;
+    @ToJson readonly limit: number;
     @JsonMerge readonly sort: Sort;
 
-    constructor(from?: number, count?: number, sort?: Sort){
+    constructor(from?: number, limit?: number, sort?: Sort){
         this.from = from;
-        this.count = count;
+        this.limit = limit;
         this.sort = sort
     }
 }

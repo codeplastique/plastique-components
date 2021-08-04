@@ -5,8 +5,8 @@ import Sort from "./Sort";
 export default class QueryRequest extends EntriesRequest{
     @ToJson readonly query: string;
 
-    constructor(from?: number, count?: number, query?: string, sort?: Sort){
-        super(from, count, sort)
+    constructor(from?: number, limit?: number, query?: string, sort?: Sort){
+        super(from, limit, sort)
         this.query = query;
     }
 }
