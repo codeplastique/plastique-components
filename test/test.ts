@@ -15,10 +15,30 @@ export default class A extends App{
     constructor(elem: HTMLElement) {
         super(elem);
 
+        //webpack-cli --config webpack.config.cjs --mode development
 
         let dropdown = new Dropdown([new DropdownOption(1, '1'), new DropdownOption(2, '2')])
         // @ts-ignore
-        let m = mount(dropdown.app$.m)
+        let m = this.mount(dropdown);
+
+        dropdown.openOptions();
+
+        App.nextTick(() => {console.log(m.html())});
+    }
+
+    private mount(comp: any): any{
+        return mount(
+            {
+                data(){
+                    return {m: comp}
+                },
+                template: `<component :is="m.app$.cn" v-bind:m="m"></component>`
+            } as any,
+            {
+                //@ts-ignore
+                localVue: Vue
+            } as any
+        );
     }
 }
 

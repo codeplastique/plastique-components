@@ -3,7 +3,7 @@ const  VUE_TEST = require('@vue/test-utils');
 const  mount = VUE_TEST.mount;
 const Vue  = VUE_TEST.createLocalVue();
 global['I18n'] = {keyToValue: {}};
-
+//move here var _AppLocale
 
 (function (modules) {
   var installedModules = {};
