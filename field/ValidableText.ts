@@ -21,6 +21,10 @@ export default class ValidableText extends ValidableField{
         return this.error;
     }
 
+    public verify(): void{
+        super.verify();
+    }
+
     protected validate(value: string): boolean {
         this.check(value);
         return this.isValueValid;
