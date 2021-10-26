@@ -2,7 +2,7 @@ import ValidableField from "./ValidableField";
 import Types from "@plastique/core/base/Types";
 
 export default class ValidableText extends ValidableField{
-    protected readonly error: string;
+    public error: string;
     constructor(
         protected validator: (text: string) => Promise<any> | boolean,
         value?: string,
