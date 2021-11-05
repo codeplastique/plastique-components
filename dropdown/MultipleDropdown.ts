@@ -81,7 +81,7 @@ export default class MultipleDropdown<V> extends Dropdown<V>{
         return this.optionsProducer(from, MultipleDropdown.COUNT, this.searchText.toLowerCase()).then(
             options => {
                 options.removeValues(this.selectedOptions)
-                if(options.length > 0) {
+                if(options.length > 0 || this.selectedOptions.length > 0) {
                     this.filteredOptions.push(...options);
                     this.calcPositions();
                 }
