@@ -227,8 +227,12 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
             this.selectItem(option, event, isSilent);
     }
 
+    private equalsObjects(a: any, b: any): boolean{
+        return a == b || (a != null && a.equals(b));
+    }
+
     protected selectItem (option: DropdownOption<V>, event?: MouseEvent, isSilent?: boolean): void{
-        if(this.selectedOption != option) {
+        if(!this.equalsObjects(this.selectedOption, option)) {
             this.selectOption(option)
             if(!isSilent)
                 this.fireEventOnParents(Dropdown.SELECT_OPTION_EVENT, option);
@@ -247,7 +251,7 @@ class Dropdown<V> implements Jsonable, RequirableValidable, Disableable, Focusab
 
     public setSelected(value: V): void{
         let options = this.options;
-        let option = options.find(o => o.value === value);
+        let option = options.find(o => this.equalsObjects(o.value, value));
         if(option == null && value == null)
             this.removeSelected();
         else
