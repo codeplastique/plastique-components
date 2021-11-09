@@ -1,5 +1,6 @@
 import Reactive from "@plastique/core/component/Reactive";
 import Component from "@plastique/core/component/Component";
+import equals from "../utils/equalsFunc";
 
 @Reactive(function (this: DropdownOption<any>){`
 <div xmlns:v="http://github.com/codeplastique/plastique" 
@@ -19,7 +20,7 @@ class DropdownOption<V> {
     }
 
     equals(obj: any){
-        return obj instanceof DropdownOption && obj.value.equals(this.value)
+        return obj instanceof DropdownOption && equals(obj.value, this.value)
     }
 }
 export default DropdownOption;
