@@ -1,0 +1,22 @@
+Plastique-Date-picker-modal($width = 32.9rem) {
+  $name = '.Date-picker-modal'
+  .Date-picker-modal {
+    background: white;
+    padding: 1.5rem;
+    position: absolute;
+    border-radius: 1rem;
+    box-shadow: 0 0.2rem 2.5rem -0.1rem rgba(0, 0, 0, 28%);
+    z-index 22
+    width: $width;
+
+    &__pickers {
+      display: flex;
+    }
+
+    &__picker {
+      + {$name}__picker {
+        margin-left 1.85rem
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+Plastique-Date-range-picker() {
+  .Date-range-picker {
+    position relative
+
+    &_rigth-side {
+      .Date-range-picker__popup {
+        left 0
+      }
+    }
+
+    &_left-side {
+      .Date-range-picker__popup {
+        right: 0
+      }
+    }
+
+    &_center-side {
+      .Date-range-picker__popup {
+        left -50%
+      }
+    }
+
+    &__input {
+      background white !important
+      padding-right: 1.75rem;
+    }
+
+    &__close-btn {
+      position: absolute;
+      line-height: 2.375rem;
+      top: 0;
+      color: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      padding: 0 .5rem;
+      z-index: 19;
+      font-size: .8rem;
+      right: .2rem;
+
+      &:hover {
+        color: #989898;
+      }
+    }
+  }
+}

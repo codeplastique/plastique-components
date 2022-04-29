@@ -1,0 +1,59 @@
+Plastique-Time-picker() {
+  $name = '.Time-picker'
+
+  .Time-picker {
+    display: inline-flex;
+    align-items: center;
+    position relative
+
+    &_inactive {
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+
+      {$name}__item-btn {
+        color: rgba(0, 0, 0, 0.2);
+      }
+
+      {$name}__item-val {
+        color: gray;
+      }
+    }
+
+    &__item {
+      text-align center
+
+      &:hover {
+        {$name}__item-btn {
+          opacity 1
+        }
+      }
+    }
+
+    &__item-btn {
+      display: block;
+      user-select: none;
+      color: #76a99d;
+      cursor: pointer;
+      opacity 0
+
+      &_inactive {
+        color: rgba(0, 0, 0, 0.2);
+        cursor auto
+      }
+    }
+
+    &__item-val {
+      width: 2rem;
+      text-align: center;
+      border-radius: .5rem;
+      border: 0;
+    }
+  }
+}

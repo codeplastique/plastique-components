@@ -1,0 +1,233 @@
+Plastique-Date-picker($dayHeight = 2rem, $dayWidth = 2rem, $dayHoverBackground = rgba(154, 202, 191, .3), $daySelectedBackground = #9acabf, $dayBorderRadius = .5rem) {
+  $name = '.Date-picker'
+  .Date-picker {
+
+    &__move-btn {
+      cursor pointer
+      color: #b1b1b1;
+      font-size: 1.1rem;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    &__month {
+      width ($dayWidth * 7)
+    }
+
+    &__month-name {
+    }
+
+    &__days-names {
+
+    }
+
+    &__days {
+      height: ($dayHeight * 6)
+      font-size .9rem
+    }
+
+    &__day-name,
+    &__day {
+      width: $dayWidth;
+      display: inline-block;
+      height: $dayHeight;
+      line-height: $dayHeight;
+      text-align: center;
+    }
+
+    &__day-name {
+      //color orange
+      color: #3c72ff;
+    }
+
+    &__day {
+      cursor: pointer;
+      border-radius: $dayBorderRadius;
+
+      &:hover {
+        background: $dayHoverBackground
+      }
+
+      &_today {
+        color: #76a99d;
+        font-weight: bold;
+        box-shadow: 0 0 0 0.125rem #76a99d inset;
+      }
+
+      &_selected {
+        background: $daySelectedBackground !important
+        color: white !important
+        font-weight: bold;
+      }
+
+      &_offset-1 {
+        margin-left $dayWidth
+      }
+
+      &_offset-2 {
+        margin-left ($dayWidth * 2)
+      }
+
+      &_offset-3 {
+        margin-left ($dayWidth * 3)
+      }
+
+      &_offset-4 {
+        margin-left ($dayWidth * 4)
+      }
+
+      &_offset-5 {
+        margin-left ($dayWidth * 5)
+      }
+
+      &_offset-6 {
+        margin-left ($dayWidth * 6)
+      }
+    }
+
+    &_range-to-incomplete {
+      {$name}__days:hover {
+        {$name}__day {
+          background $dayHoverBackground;
+          border-radius 0
+
+          &:hover {
+            border-radius 0 $dayBorderRadius $dayBorderRadius 0
+
+            ~ {$name}__day {
+              background none
+            }
+          }
+        }
+      }
+    }
+
+    &_range-from-incomplete {
+      {$name}__days:hover {
+        {$name}__day {
+          &:hover {
+            border-radius $dayBorderRadius 0 0 $dayBorderRadius
+            //background $dayHoverBackground
+
+            ~ {$name}__day {
+              background $dayHoverBackground
+              border-radius 0
+            }
+          }
+        }
+      }
+    }
+
+    &_range-incomplete {
+      {$name}__days:hover {
+        {$name}__day {
+          border-radius 0
+
+          //&:hover,
+
+          &:hover ~ {$name}__day {
+            background $dayHoverBackground
+          }
+
+          &:hover ~ {$name}__day_selected ~ {$name}__day {
+            background none
+          }
+
+          &_selected {
+            ~ {$name}__day {
+              background $dayHoverBackground
+            }
+
+            &:hover ~ {$name}__day,
+            ~ {$name}__day:hover ~ {$name}__day {
+              background none
+            }
+          }
+        }
+      }
+    }
+
+
+    &_range-from-temp {
+      {$name}__day_selected {
+        border-radius $dayBorderRadius 0 0 $dayBorderRadius
+
+        ~ {$name}__day {
+          background $dayHoverBackground
+          border-radius 0
+        }
+      }
+    }
+
+    &_range-to-temp {
+      {$name}__day {
+        background $dayHoverBackground;
+        border-radius 0
+
+        &_selected {
+          border-radius 0 $dayBorderRadius $dayBorderRadius 0
+
+          ~ {$name}__day {
+            background none
+            border-radius $dayBorderRadius
+          }
+        }
+      }
+    }
+
+    &_range-from {
+      {$name}__day_selected {
+        border-radius $dayBorderRadius 0 0 $dayBorderRadius
+
+        ~ {$name}__day {
+          background $daySelectedBackground
+          border-radius 0
+        }
+      }
+    }
+
+    &_range-to {
+      {$name}__day {
+        background $daySelectedBackground;
+        border-radius 0
+
+        &_selected {
+          border-radius 0 $dayBorderRadius $dayBorderRadius 0
+
+          ~ {$name}__day {
+            background none
+            border-radius $dayBorderRadius
+          }
+        }
+      }
+    }
+
+    &_range {
+      {$name}__day_selected {
+        border-radius $dayBorderRadius 0 0 $dayBorderRadius
+
+        ~ {$name}__day {
+          background $daySelectedBackground
+          border-radius 0
+        }
+
+        ~ {$name}__day_selected {
+          border-radius 0 $dayBorderRadius $dayBorderRadius 0
+
+          ~ {$name}__day {
+            background none
+            border-radius $dayBorderRadius
+          }
+        }
+      }
+    }
+
+  }
+
+
+}

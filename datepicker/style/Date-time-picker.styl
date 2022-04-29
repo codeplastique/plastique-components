@@ -1,0 +1,24 @@
+Plastique-Date-time-picker() {
+  $name = '.Date-time-picker'
+
+  .Date-time-picker {
+    &__date-picker {}
+
+    &__time {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &_active {
+        {$name}__time-icon {
+          color: #90c3b8;
+        }
+      }
+    }
+
+    &__time-icon {
+      margin-right: .5rem;
+      color: rgba(0, 0, 0, .3);
+    }
+  }
+}
