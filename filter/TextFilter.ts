@@ -8,17 +8,21 @@ import ValidableField from "../field/ValidableField";
 @Reactive(function (this: TextFilter<any>) {
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
       class="Filter" 
-      v:classappend="${this.isFocused || this.isFilled() ? 'Filter_filled' : ''}">
+      v:classappend="
+        ${this.isFocused || this.isFilled() ? 'Filter_filled' : ''} + 
+        ${this.disabled ? 'Filter_disabled' : ''}
+      ">
 
       <label class="Filter__name" v:text="${this.name}" ></label>
       <input v:model="${this.value}" 
+             v:disabled="${this.disabled}"
              class="Filter__input" 
              v:onfocus="${this.onFocus}"
              v:classappend="${!this.isValid() ? 'Filter__input_invalid' : ''}"
              v:onblur="${this.onBlur}">
              
       <i class="fas fa-times Filter__remove-btn" 
-         v:if="${this.isFilled()}" 
+         v:if="${this.isFilled() && !this.disabled}" 
          v:onclick="${this.clear}"></i>
 </div>
 `})
@@ -27,6 +31,7 @@ class TextFilter<T> implements Filter<T>, Jsonable {
     @OnChange(TextFilter.prototype.onChange)
     protected value: string;
     private isFocused: boolean;
+    private disabled: boolean;
     private readonly validator: ValidableField
     private readonly matcher: (obj: T, value: string) => boolean
 
@@ -86,6 +91,17 @@ class TextFilter<T> implements Filter<T>, Jsonable {
     public toJSON(): Object {
         return this.validator ? this.validator.getValue() : this.value;
     }
+
+    isDisabled(): boolean {
+        return this.disabled;
+    }
+
+    setDisabled(isDisabled: boolean): void {
+        this.disabled = isDisabled
+        // if(this.validator)
+        //     this.validator.setDisabled(isDisabled)
+    }
+
 }
 
 export default TextFilter;

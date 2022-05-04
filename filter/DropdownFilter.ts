@@ -10,7 +10,10 @@ import DropdownOption from "../dropdown/DropdownOption";
 @Reactive(function (this: DropdownFilter<any>) {
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
     class="Filter" 
-    v:classappend="${this.dropdown.isActive || this.isFilled()? 'Filter_filled': ''}">
+    v:classappend="
+        ${this.dropdown.isActive || this.isFilled()? 'Filter_filled': ''} +
+        ${this.dropdown.isDisabled()? 'Filter_disabled' : ''}
+    ">
     
     <label v:text="${this.name}" class="Filter__name"></label>
     <dropdown v:component="${this.dropdown}" v:classappend="'Dropdown_filter'"></dropdown>
@@ -57,6 +60,14 @@ class DropdownFilter<T> implements Filter<T>, Jsonable {
 
     public toJSON():  Object | Object[] {
         return this.dropdown.toJSON();
+    }
+
+    isDisabled(): boolean {
+        return this.dropdown.isDisabled();
+    }
+
+    setDisabled(isDisabled: boolean): void {
+        this.dropdown.setDisabled(isDisabled)
     }
 
 }
