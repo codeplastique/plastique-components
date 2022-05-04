@@ -6,6 +6,7 @@ import BindThis from "@plastique/core/utils/BindThis";
 import Inject from "@plastique/core/component/Inject";
 import CssUtils from "plastique-components/utils/CssUtils";
 import DateUtils from "plastique-components/datetime/DateUtils";
+import Disableable from "../state/Disableable";
 
 @Reactive(function(this: DateRangePickerModal){
 `<div xmlns:v="http://github.com/codeplastique/plastique" 
@@ -18,13 +19,16 @@ import DateUtils from "plastique-components/datetime/DateUtils";
            autocomplete="off"
            v:ref="${this.inputElem}"
            v:value="${this.getValueString()}"
-           v:onclick="${this.open}"/>
+           v:onclick="${this.open}"
+           v:disabled="${this.disabled}"
+    />
             
     <modal v:if="${this.isSelfModalContainer && this.picker}" v:component="${this.picker}" v:classappend="'Date-range-picker__popup'"></modal>
 </div>`})
-class DateRangePickerModal implements Jsonable{
+class DateRangePickerModal implements Jsonable, Disableable{
     @Inject private readonly inputElem: HTMLElement;
     private static readonly MODAL_WIDTH_REM = 32.9;
+    public disabled: boolean;
 
     protected range: [Date, Date];
     // public tillDate: Date;
@@ -121,6 +125,14 @@ class DateRangePickerModal implements Jsonable{
             ~~(DateUtils.getUTCTimestamp(range[0]) / 1000),
             ~~(DateUtils.getUTCTimestamp(range[1]) / 1000)
         ]: null
+    }
+
+    isDisabled(): boolean {
+        return this.disabled;
+    }
+
+    setDisabled(isDisabled: boolean): void {
+        this.disabled = isDisabled;
     }
 
 }

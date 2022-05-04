@@ -52,7 +52,7 @@ class TimePickerItem {
     }
 
     protected setMultiValue(factor: number): void{
-        let timerId: number, intervalId: number;
+        let timerId: any, intervalId: any;
 
         Page.addSingleEventListener('mouseup', () => {
             clearTimeout(timerId);

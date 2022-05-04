@@ -47,6 +47,9 @@ Plastique-Filter($height = 1.5rem, $inactiveIconColor = #b5b5b5) {
       {$name}__name{
         color: #6c757d
       }
+      {$name}__input{
+        cursor: auto
+      }
     }
 
     &__name {
@@ -135,6 +138,37 @@ Plastique-Filter($height = 1.5rem, $inactiveIconColor = #b5b5b5) {
         }
 
       }
+    }
+  }
+
+  .Filter_disabled{
+    .Dropdown__search{
+      cursor auto !important
+    }
+  }
+
+  .Date-range-picker {
+    $name = '.Date-range-picker'
+
+    &_filter {
+      color: initial
+
+      {$name} {
+        &__input {
+          background-color: transparent !important;
+          border: 0;
+          color: initial;
+          padding: 0.3rem 2rem 0.1rem 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          cursor pointer
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+
     }
   }
 
