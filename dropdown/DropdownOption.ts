@@ -4,9 +4,10 @@ import equals from "../utils/equalsFunc";
 
 @Reactive(function (this: DropdownOption<any>){`
 <div xmlns:v="http://github.com/codeplastique/plastique" 
-    class="Dropdown__item-val"
-    v:classappend="${this.withState? 'Dropdown__item-val_with-state': 'Dropdown__item-val_simple'}" 
-    v:text="${this.text}"></div>
+     class="Dropdown__item-val"
+     v:classappend="${this.withState? 'Dropdown__item-val_with-state': 'Dropdown__item-val_simple'}"
+     v:title="${this.text}"
+     v:text="${this.text}"></div>
 `})
 class DropdownOption<V> {
     public readonly value: V;
